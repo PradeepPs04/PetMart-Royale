@@ -6,6 +6,7 @@ import { useSearchParams } from 'react-router-dom'
 import ProductFilter from '@/components/shopping/Filter'
 import ShoppingProductTile from '@/components/shopping/ProductTile'
 import ProductDetailsDialog from '@/components/shopping/ProductDetails'
+import PaginationWrapper from '@/components/common/PaginationWrapper'
 
 // shadcn ui components
 import { DropdownMenu, DropdownMenuTrigger } from '@radix-ui/react-dropdown-menu'
@@ -46,12 +47,15 @@ const ShoppingProductListing = () => {
 
   const [filters, setFilters] = useState({});
   const [sort, setSort] = useState('price-lowtohigh');
+  const [openProdDetailsDialog, setOpenProdDetailsDialog] = useState(false);
 
-   const [openProdDetailsDialog, setOpenProdDetailsDialog] = useState(false);
+  // for pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 12;
 
   const [searchParams, setSearchParams] = useSearchParams();
-  
   const categorySearchParam = searchParams.get('category');
+  
 
   // function to set sort value in sort state
   const handleSort = (value) => {
@@ -180,7 +184,7 @@ const ShoppingProductListing = () => {
           <div className='p-4 border-b flex items-center justify-between'>
             <h2 className='text-lg font-bold'>All Products</h2>
 
-            {/* product count & sort by*/}
+            {/* product count & sort by filter*/}
             <div className='flex items-center gap-3'>
               {/* no. of products */}
               <span className='text-muted-foreground'>
@@ -222,13 +226,15 @@ const ShoppingProductListing = () => {
           <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4'>
               {
                 products && products?.length > 0 && (
-                  products.map((item, idx) => (
-                    <ShoppingProductTile 
-                      key={idx} 
-                      product={item}
-                      handleGetProductDetails={handleGetProductDetails}
-                      handleAddToCart={handleAddToCart}
-                    />
+                  [...products]
+                    .slice((currentPage-1)*itemsPerPage, (currentPage)*itemsPerPage)
+                    .map((item, idx) => (
+                      <ShoppingProductTile 
+                        key={idx} 
+                        product={item}
+                        handleGetProductDetails={handleGetProductDetails}
+                        handleAddToCart={handleAddToCart}
+                      />
                   ))
                 )
               }
@@ -243,6 +249,14 @@ const ShoppingProductListing = () => {
           handleAddToCart={handleAddToCart}
           handleGetProductDetails={handleGetProductDetails}
           relatedProducts={relatedProducts}
+        />
+
+        {/* Pagination */}
+        <PaginationWrapper
+          totalItems={products?.length}
+          itemsPerPage={itemsPerPage}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
         />
     </div>
   )

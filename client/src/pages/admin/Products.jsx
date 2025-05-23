@@ -18,6 +18,8 @@ import CommonForm from '@/components/common/Form'
 
 // APIs
 import { createProduct, deleteProduct, editProduct, fetchAllProducts } from '@/services/operations/adminAPIs'
+import { Pagination, PaginationContent, PaginationItem, PaginationNext, PaginationPrevious } from '@/components/ui/pagination'
+import PaginationWrapper from '@/components/common/PaginationWrapper'
 
 // initial form data state
 const initialState = {
@@ -39,8 +41,16 @@ const AdminProducts = () => {
   const [imagePreview, setImagePreview] = useState(null);
   const [currentEditId, setCurrentEditId] = useState(null);
 
+  // for pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 12;
+
+
+
   const {products} = useSelector((state) => state.adminProducts);
   const dispatch = useDispatch();
+
+
 
   // handles creating new product
   const onSubmit = (e) => {
@@ -140,66 +150,76 @@ const AdminProducts = () => {
         {
           products && products?.length > 0 
           ? (
-            products.map((product, idx) => (
-              <AdminProductTile 
-                key={idx}
-                product={product}
-                setCurrentEditId={setCurrentEditId}
-                setOpenCreateProductDialog={setOpenCreateProductDialog}
-                setFormData={setFormData}
-                setImagePreview={setImagePreview}
-                handleDelete={handleDelete}
-              />
-            ))
-          ) : (
-            <></>
-          )
+            [...products]
+              .slice((currentPage-1)*itemsPerPage, (currentPage)*itemsPerPage)
+              .map((product, idx) => (
+                <AdminProductTile 
+                  key={idx}
+                  product={product}
+                  setCurrentEditId={setCurrentEditId}
+                  setOpenCreateProductDialog={setOpenCreateProductDialog}
+                  setFormData={setFormData}
+                  setImagePreview={setImagePreview}
+                  handleDelete={handleDelete}
+                />
+              ))
+            ) : null
         }
       </div>
 
-        {/* add product dialog */}
-        <Sheet 
-          open={openCreateProductDialog}
-          onOpenChange={() => {
-            setOpenCreateProductDialog(false);
-            setCurrentEditId(null);
-            setImagePreview(null);
-            setFormData(initialState);
-          }}
-        >
-          <SheetContent side='right' className='overflow-auto'>
-            <SheetHeader>
-              <SheetTitle>
-                {
-                  currentEditId ? 'Edit Product'
-                  : 'Add New Product'
-                }
-              </SheetTitle>
-            </SheetHeader>
+      {/* add product dialog */}
+      <Sheet 
+        open={openCreateProductDialog}
+        onOpenChange={() => {
+          setOpenCreateProductDialog(false);
+          setCurrentEditId(null);
+          setImagePreview(null);
+          setFormData(initialState);
+        }}
+      >
+        <SheetContent side='right' className='overflow-auto'>
+          <SheetHeader>
+            <SheetTitle>
+              {
+                currentEditId ? 'Edit Product'
+                : 'Add New Product'
+              }
+            </SheetTitle>
+          </SheetHeader>
 
-            {/* product image uploader */}
-            <div className='px-6'>
-              <ProductImageUpload
-                file={imageFile}
-                setFile={setImageFile}
-                imagePreview={imagePreview}
-                setImagePreview={setImagePreview}
-              />
-            </div>
+          {/* product image uploader */}
+          <div className='px-6'>
+            <ProductImageUpload
+              file={imageFile}
+              setFile={setImageFile}
+              imagePreview={imagePreview}
+              setImagePreview={setImagePreview}
+            />
+          </div>
 
-            <div className='p-6'>
-              <CommonForm
-                formData={formData}
-                setFormData={setFormData}
-                formControls={addProductFormElements}
-                buttonText={currentEditId ? 'Save Changes' : 'Add'}
-                onSubmit={onSubmit}
-                isButtonDisabled={!isFormValid()}
-              />
-            </div>
-          </SheetContent>
-        </Sheet>
+          <div className='p-6'>
+            <CommonForm
+              formData={formData}
+              setFormData={setFormData}
+              formControls={addProductFormElements}
+              buttonText={currentEditId ? 'Save Changes' : 'Add'}
+              onSubmit={onSubmit}
+              isButtonDisabled={!isFormValid()}
+            />
+          </div>
+        </SheetContent>
+      </Sheet>
       
+      {/* Pagination */}
+      <section className='my-12'>
+        <PaginationWrapper
+          totalItems={products?.length}
+          itemsPerPage={itemsPerPage}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+        />
+      </section>
+
     </Fragment>
   )
 }
