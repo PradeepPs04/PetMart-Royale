@@ -6,6 +6,7 @@ import { Badge } from '../ui/badge'
 import { Button } from '../ui/button'
 
 const ShoppingProductTile = ({product, handleGetProductDetails, handleAddToCart, dialogRef}) => {
+
   return (
     <Card className='w-full max-w-sm mx-auto cursor-pointer'>
         <div

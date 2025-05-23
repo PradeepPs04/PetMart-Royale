@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { Suspense, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom'
 
@@ -10,7 +10,7 @@ import { Avatar, AvatarFallback } from '../ui/avatar'
 import { Label } from '../ui/label'
 
 // icons
-import { HousePlug, LogOut, Menu, ShoppingCart, UserCog } from 'lucide-react'
+import { HousePlug, LogInIcon, LogOut, Menu, ShoppingCart, UserCog, UserIcon } from 'lucide-react'
 
 // config data
 import { shoppingMenuItems } from '@/config/userShop'
@@ -81,6 +81,12 @@ const HeaderRightContent = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   
+  const handleGuestLogin = async () => {
+    const isGuest = true;
+    // logout guest account and redirect to login page
+    await logout(dispatch, isGuest);
+  }
+
   // fetch cart items
   useEffect(() => {
     const fetchCart = async () => {
@@ -114,11 +120,13 @@ const HeaderRightContent = () => {
         />
       </Sheet>
 
+      {/* user account dropdown menu */}
        <DropdownMenu>
+        {/* button to open account options dropdown */}
         <DropdownMenuTrigger asChild>
           <Avatar className='bg-black select-none cursor-pointer'>
             <AvatarFallback className='bg-black text-white font-extrabold'>
-              {user?.userName?.[0]?.toUpperCase()}
+              <UserIcon size={20}/>
             </AvatarFallback>
           </Avatar>
         </DropdownMenuTrigger>
@@ -127,23 +135,43 @@ const HeaderRightContent = () => {
         <DropdownMenuContent side='right' className='w-56'>
           <DropdownMenuLabel>Logged in as {user?.userName}</DropdownMenuLabel>
           <DropdownMenuSeparator/>
+            {
+              user?.role === 'guest' ? (
+                <>
+                    {/* Login */}
+                    <DropdownMenuItem 
+                      onClick={handleGuestLogin}
+                      className='cursor-pointer'
+                    >
+                      <LogInIcon className='mr-2 h-4 w-4'/>
+                      Login
+                    </DropdownMenuItem>
+                </>
+              ) : (
+                <>
+                    {/* account */}
+                    <DropdownMenuItem 
+                      onClick={() => navigate('/shop/account')}
+                      className='cursor-pointer'
+                    >
+                      <UserCog className='mr-2 h-4 w-4'/>
+                      Account
+                    </DropdownMenuItem>
 
-          <DropdownMenuItem 
-            onClick={() => navigate('/shop/account')}
-            className='cursor-pointer'
-          >
-            <UserCog className='mr-2 h-4 w-4'/>
-            Account
-          </DropdownMenuItem>
+                    {/* logout */}
+                    <DropdownMenuItem 
+                      onClick={async () => await logout(dispatch)}
+                      className='cursor-pointer'
+                    >
+                      <LogOut className='mr-2 h-4 w-4'/>
+                      Logout
+                    </DropdownMenuItem>
+                </>
+              )  
+            }
           <DropdownMenuSeparator/>
 
-          <DropdownMenuItem 
-            onClick={async () => await logout(dispatch)}
-            className='cursor-pointer'
-          >
-            <LogOut className='mr-2 h-4 w-4'/>
-            Logout
-          </DropdownMenuItem>
+          
         </DropdownMenuContent>
        </DropdownMenu>
     </div>

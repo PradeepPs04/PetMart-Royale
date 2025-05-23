@@ -40,7 +40,8 @@ const ShoppingProductListing = () => {
 
   const dispatch = useDispatch();
 
-  const {products, productDetails, relatedProducts} = useSelector((state) => state.shopProducts);
+  const { user } = useSelector(state => state.auth);
+  const { products, productDetails, relatedProducts } = useSelector((state) => state.shopProducts);
   const { cartItems } = useSelector(state => state.shopCart);
 
   const [filters, setFilters] = useState({});
@@ -100,6 +101,12 @@ const ShoppingProductListing = () => {
 
   // function to add item to cart
   const handleAddToCart = async (productId, totalStock) => {
+    // if guest user
+    if(user?.role === 'guest') {
+      toast.error("Please login to continue!", {position: 'top-center'});
+      return;
+    }
+
     let getCartItems = cartItems || [];
 
     if(getCartItems.length) {

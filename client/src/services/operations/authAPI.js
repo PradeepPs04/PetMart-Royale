@@ -3,7 +3,7 @@ import { apiConnector } from "../apiConnector";
 import { authEndpoints } from "../apis";
 
 // redux store slices
-import { setIsAuthenticated, setUser } from "@/store/auth-slice";
+import { setIsAuthenticated, setLoading, setUser } from "@/store/auth-slice";
 
 
 const {
@@ -43,8 +43,10 @@ export async function signup(formData) {
 }
 
 // function to call login api
-export async function login(formData, dispatch) {
+export async function login(formData, dispatch, isGuest=true) {
     const toastId = toast.loading("Loading...");
+    dispatch(setLoading(true));
+    
     try {
         const response = await apiConnector(
             'POST',
@@ -62,13 +64,17 @@ export async function login(formData, dispatch) {
         dispatch(setUser(response?.data?.user));
         dispatch(setIsAuthenticated(true));
 
-        toast.success(response?.data?.message);
+        // don't display toast for guest user
+        if(!isGuest) {
+            toast.success(response?.data?.message);
+        }
     } catch(err) {
         console.error("LOGIN API error...", err);
         toast.error(err?.response?.data?.message || err.message);
     }
 
     toast.dismiss(toastId);
+    dispatch(setLoading(false));
 }
 
 // function to call check authentication api
@@ -101,7 +107,7 @@ export async function checkAuth(dispatch) {
 }
 
 // function to call logout api
-export async function logout(dispatch) {
+export async function logout(dispatch, isGuest=false) {
     const toastId = toast.loading("Loading...");
     try {
         const response = await apiConnector('POST', LOGOUT_API);
@@ -114,7 +120,11 @@ export async function logout(dispatch) {
 
         dispatch(setUser(null));
         dispatch(setIsAuthenticated(false));
-        toast.success('Logged out successfully');
+
+        // don't display toast for guest user
+        if(!isGuest) {   
+            toast.success('Logged out successfully');
+        }
     } catch(err) {
         console.error("LOGOUT API error...", err);
         toast.error(err?.response?.data?.message || err.message);

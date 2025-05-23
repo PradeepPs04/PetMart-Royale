@@ -42,14 +42,9 @@ const Signup = () => {
 
   return (
     <div className='mx-auto w-full max-w-md space-y-6'>
-        <div className='text-center'>
-          <h1 className='text-3xl font-bold tracking-tight text-foreground'>Create new account</h1>
-
-          <p className='mt-2'>
-            Already have an account {" "}
-            <Link to='/auth/login' className='font-medium text-primary hover:underline'>Login</Link>
-          </p>
-        </div>
+          <h1 className='text-3xl font-bold tracking-tight text-foreground text-center'>
+            Create new account
+          </h1>
 
         <CommonForm
           formControls={signUpFormControls}
@@ -58,6 +53,11 @@ const Signup = () => {
           setFormData={setFormData}
           onSubmit={onSubmit}
         />
+
+        <p className='mt-2 text-center'>
+            Already have an account {" "}
+            <Link to='/auth/login' className='font-medium text-primary hover:underline'>Login</Link>
+        </p>
     </div>
   )
 }

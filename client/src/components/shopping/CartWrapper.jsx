@@ -1,13 +1,19 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 // shadcn ui components
 import { SheetContent, SheetHeader, SheetTitle } from '../ui/sheet'
 import { Button } from '../ui/button'
+
+// components
 import UserCartContent from './CartContent';
+import { toast } from 'react-toastify';
 
 const UserCartWrapper = ({cartItems, setOpenCartSheet}) => {
 
+    const { user } = useSelector(state => state.auth);
+    
     const navigate = useNavigate();
 
     // calculate total cart amount
@@ -23,6 +29,16 @@ const UserCartWrapper = ({cartItems, setOpenCartSheet}) => {
                         0
                     )
         : 0;
+    
+    // function to go to checkout page
+    const handleNavigateToCheckout = () => {
+        if(user?.role === 'guest') {
+            toast.error("Please login to continue!", {position: 'top-center'});
+            return;
+        }
+        navigate('/shop/checkout');
+        setOpenCartSheet(false);
+    }
 
   return (
     <SheetContent className='sm:max-w-md'>
@@ -50,11 +66,7 @@ const UserCartWrapper = ({cartItems, setOpenCartSheet}) => {
         {/* checkout button */}
         <div className='px-4'>
             <Button 
-                onClick={() => {
-                    navigate('/shop/checkout');
-                    setOpenCartSheet(false);
-                    }
-                }
+                onClick={handleNavigateToCheckout}
                 className='w-full mt-6 cursor-pointer'
             >
                 Checkout

@@ -19,5 +19,7 @@ export default defineConfig({
    define: {
     "process.env.REACT_APP_BASE_URL": JSON.stringify(process.env.VITE_REACT_APP_BASE_URL),
     "process.env.RAZORPAY_KEY": JSON.stringify(process.env.VITE_REACT_APP_RAZORPAY_KEY),
+    "process.env.GUEST_EMAIL": JSON.stringify(process.env.VITE_REACT_APP_GUEST_EMAIL),
+    "process.env.GUEST_PASSWORD": JSON.stringify(process.env.VITE_REACT_APP_GUEST_PASSWORD),
   }
 })

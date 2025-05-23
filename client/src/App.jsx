@@ -16,6 +16,7 @@ import AdminLayout from './components/admin/Layout'
 import AdminDashboard from './pages/admin/Dashboard'
 import AdminProducts from './pages/admin/Products'
 import AdminOrdersView from './pages/admin/Orders'
+import AdminFeatures from './pages/admin/Features';
 
 // shopping pages
 import ShoppingLayout from './components/shopping/Layout'
@@ -25,6 +26,7 @@ import ShoppingCheckout from './pages/shopping/Checkout'
 import ShoppingAccount from './pages/shopping/Account'
 import CheckAuth from './components/common/CheckAuth'
 import UnauthPage from './pages/unauth-page/Index'
+import SearchProducts from './pages/shopping/Search';
 
 // reducers
 import { setLoading } from './store/auth-slice';
@@ -34,7 +36,6 @@ import { checkAuth } from './services/operations/authAPI';
 
 // shadcn ui components
 import { Skeleton } from './components/ui/skeleton';
-import SearchProducts from './pages/shopping/Search';
 
 
 const App = () => {
@@ -68,8 +69,7 @@ const App = () => {
           path='/'
           element={
             <CheckAuth isAuthenticated={isAuthenticated} user={user}>
-            
-          </CheckAuth>
+            </CheckAuth>
           }
         />
 
@@ -90,6 +90,7 @@ const App = () => {
           </CheckAuth>
         }>
           <Route path='dashboard' element={<AdminDashboard/>}/>
+          <Route path='features' element={<AdminFeatures/>}/>
           <Route path='products' element={<AdminProducts/>}/>
           <Route path='orders' element={<AdminOrdersView/>}/>
         </Route>

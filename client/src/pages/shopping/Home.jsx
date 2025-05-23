@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 // images
 import activeLogo from '../../assets/brandLogos/active.png'
@@ -22,7 +23,7 @@ import ShoppingProductTile from '@/components/shopping/ProductTile'
 import ProductDetailsDialog from '@/components/shopping/ProductDetails'
 
 // icons
-import { DogIcon, BoneIcon, ChevronLeft, ChevronRight, DrumIcon, NutIcon, ShirtIcon, SoapDispenserDropletIcon, CatIcon, BirdIcon, BedIcon, Dice5 } from 'lucide-react'
+import { DogIcon, ChevronLeft, ChevronRight, CatIcon, BirdIcon, BedIcon, Dice5 } from 'lucide-react'
 
 // APIs
 import { getFeatureImages } from '@/services/operations/featureImageAPI'
@@ -54,6 +55,7 @@ const ShoppingHome = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const { user } = useSelector(state => state.auth);
   const { products, productDetails } = useSelector(state => state.shopProducts);
   const { featureImageList } = useSelector(state => state.common);
 
@@ -76,6 +78,12 @@ const ShoppingHome = () => {
   
   // function to add item to cart
   const handleAddToCart = async (productId) => {
+    // if guest user
+    if(user?.role === 'guest') {
+      toast.error("Please login to continue!", {position: 'top-center'});
+      return;
+    }
+
     const data = {
       productId: productId,
       quantity: 1,

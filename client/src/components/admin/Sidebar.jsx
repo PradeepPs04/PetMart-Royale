@@ -1,9 +1,10 @@
 import React, { Fragment } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 // icons
-import { LayoutDashboard, ShoppingBasket, Truck, ChartNoAxesCombined } from "lucide-react"
+import { LayoutDashboard, ShoppingBasket, Truck, ChartNoAxesCombined, ImagePlusIcon } from "lucide-react"
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '../ui/sheet'
+import { toast } from 'react-toastify';
 
 
 // items for admin side bar
@@ -26,11 +27,20 @@ export const adminSidebarMenuItems = [
         path: '/admin/orders',
         icon: <Truck/>,
     },
-]
+    {
+      id: 'features',
+      label: 'Features',
+      path: '/admin/features',
+      icon: <ImagePlusIcon/>,
+    },
+];
 
 const MenuItems = ({setOpen}) => {
 
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const currentPath = location.pathname.split('/').at(-1);
 
   return (
     <nav className='mt-8 flex flex-col gap-2'>
@@ -42,7 +52,9 @@ const MenuItems = ({setOpen}) => {
                 navigate(item.path);
                 setOpen ? setOpen(false) : null;
               }}
-              className='flex items-center gap-2 text-lg rounded-md px-3 py-2 text-muted-foreground hover:bg-muted hover:text-foreground cursor-pointer'
+              className={`${currentPath === item.id ? 'bg-muted outline-1' : ''}
+              flex items-center gap-2 text-lg rounded-md px-3 py-2 text-muted-foreground hover:bg-muted cursor-pointer transition-colors duration-200`
+              }
             >
               {item.icon}
               <span>{item.label}</span>
