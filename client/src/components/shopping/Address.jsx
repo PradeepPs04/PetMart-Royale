@@ -31,8 +31,6 @@ const Address = ({currentSelectedAddress, setCurrentSelectedAddress}) => {
     const dispatch = useDispatch();
     const location = useLocation();
 
-    console.log("path: ", location.pathname.split('/').at(-1));
-
     const { user } = useSelector((state) => state.auth);
     const { addressList } = useSelector((state) => state.address);
 

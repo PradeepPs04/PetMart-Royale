@@ -106,14 +106,27 @@ const AdminOrderDetailsView = ({orderDetails}) => {
                 {/* ordered items details */}
                 <div className='gap-4'>
                     <div className='grid gap-2'>
-                        <div className='font-medium'>Order Details</div>
+                        <p className='font-medium'>Order Details</p>
 
-                        <ul className='grid gap-3'>
+                        <ul className='grid gap-4'>
                             {
                                 orderDetails?.cartItems && orderDetails?.cartItems.length > 0 ? (
                                    orderDetails?.cartItems.map(item => (
-                                    <li className='flex items-center justify-between'>
-                                        <span>{item?.title}</span>
+                                    <li className='grid grid-cols-2 md:grid-cols-4 space-x-6 items-center'>
+                                        {/* name */}
+                                        <span>
+                                            {
+                                                item?.title.length > 55
+                                                    ? `${item?.title.slice(0,55)}...`
+                                                    : item?.title
+                                            }
+                                        </span>
+                                        
+                                        {/* image */}
+                                        <img
+                                            className='h-20 border p-1 rounded'
+                                            src={item?.image}
+                                        />
 
                                         <span>Quantity: {item?.quantity}</span>
 

@@ -52,8 +52,6 @@ exports.createOrder = async (req, res) => {
             orderId: paymentResponse.orderId,
             signature: paymentResponse.signature,
         });
-        // createdOrder.orderId = paymentResponse.orderId;
-        // createdOrder.signature = paymentResponse.signature;
 
         return res.status(200).json({
             success: true,
@@ -109,7 +107,8 @@ exports.verifyPayment = async (req, res) => {
                 orderStatus: 'confirmed',
             }, {new: true});
 
-            // decreament quantity of product 
+            // decreament available quantity of product 
+            // and increase total quantity sold for product
             for(let item of order.cartItems) {
                 let product = await Product.findById(item.productId);
                 if(!product) {
@@ -120,6 +119,7 @@ exports.verifyPayment = async (req, res) => {
                 }
 
                 product.totalStock -= item.quantity;
+                product.quantitySold += item.quantity;
                 await product.save();
             }
 

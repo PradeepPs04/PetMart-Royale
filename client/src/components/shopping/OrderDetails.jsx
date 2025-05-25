@@ -70,16 +70,25 @@ const ShoppingOrderDetailsView = ({orderDetails}) => {
                     <div className='grid gap-2'>
                         <div className='font-medium'>Order Details</div>
 
-                        <ul className='grid gap-3'>
+                        <ul className='grid gap-4'>
                             {
                                 orderDetails?.cartItems && orderDetails?.cartItems.length > 0 ? (
                                    orderDetails?.cartItems.map(item => (
-                                    <li className='flex items-center justify-between'>
-                                        <span>{item?.title}</span>
-                                        
-                                        <span className='outline-1 rounded-lg overflow-hidden'>
-                                            <img src={item?.image} className='h-20'/>
+                                    <li className='grid grid-cols-2 md:grid-cols-4 items-center gap-6'>
+                                        {/* name */}
+                                        <span>
+                                            {
+                                                item?.title.length > 55
+                                                    ? `${item?.title.slice(0,55)}...`
+                                                    : item?.title
+                                            }
                                         </span>
+
+                                        {/* image */}
+                                        <img 
+                                            src={item?.image} 
+                                            className='h-20 border p-1 rounded'
+                                        />
 
                                         <span>Quantity: {item?.quantity}</span>
 

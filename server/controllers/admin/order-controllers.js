@@ -10,7 +10,7 @@ exports.getAllOrders = async (req, res) => {
             success: true,
             message: "All orders fetched successfully",
             data: orders,
-        })
+        });
     } catch(err) {
         console.error(err);
         return res.status(500).json({

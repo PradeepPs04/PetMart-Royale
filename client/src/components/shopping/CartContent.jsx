@@ -72,7 +72,13 @@ const UserCartContent = ({cartItem}) => {
         {/* item name & action buttons */}
         <div className='flex-1'>
           <h3 className='font-bold'>
-            {cartItem?.title}
+            {
+              cartItem?.title.length > 55 ? (
+                `${cartItem?.title.slice(0, 55)}...`
+              ): (
+                cartItem?.title
+              )
+            }
           </h3>
 
             {/* buttons */}

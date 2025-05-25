@@ -9,11 +9,13 @@ import { Card, CardContent, CardHeader, CardTitle } from '../ui/card'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../ui/table'
 import { Button } from '../ui/button'
 import { Dialog } from '../ui/dialog'
+import { Badge } from '../ui/badge'
 
 // components
 import ShoppingOrderDetailsView from './OrderDetails'
+
+// APIs
 import { getOrderDetails, getUserOrders } from '@/services/operations/orderAPI'
-import { Badge } from '../ui/badge'
 
 const ShoppingOrders = () => {
 

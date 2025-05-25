@@ -79,7 +79,7 @@ exports.fetchCartItems = async (req, res) => {
         const cart = await Cart.findOne({userId})
             .populate({
                 path: 'items.productId',
-                select: 'image title price salePrice', // these fields will be selected after populating
+                select: 'image title category brand price salePrice', // these fields will be selected after populating
             })
             .exec();
 
@@ -107,6 +107,8 @@ exports.fetchCartItems = async (req, res) => {
               productId: item.productId._id,
               image: item.productId.image,
               title: item.productId.title,
+              category: item.productId.category,
+              brand: item.productId.brand,
               price: item.productId.price,
               salePrice: item.productId.salePrice,
               quantity: item.quantity,
@@ -178,7 +180,7 @@ exports.updateCartItemQuantity = async (req, res) => {
         // populate the cart
         await cart.populate({
             path: 'items.productId',
-            select: 'image title price salePrice',
+            select: 'image title category brand price salePrice',
         });
 
         // create data of valid cart items
@@ -187,6 +189,8 @@ exports.updateCartItemQuantity = async (req, res) => {
               productId: item.productId ? item.productId._id : null,
               image: item.productId ? item.productId.image : null,
               title: item.productId ? item.productId.title : null,
+              category: item.productId ? item.productId.category : null,
+              brand: item.productId ? item.productId.brand : null,
               price: item.productId ? item.productId.price : null,
               salePrice: item.productId ? item.productId.salePrice : null,
               quantity: item.quantity,
@@ -248,7 +252,7 @@ exports.deleteCartItem = async (req, res) => {
         // populate cart 
         await cart.populate({
             path: 'items.productId',
-            select: 'image title price salePrice',
+            select: 'image title category brand price salePrice',
         });
 
         // create data of valid cart items (valid = only those that are available in db)
@@ -258,6 +262,8 @@ exports.deleteCartItem = async (req, res) => {
               productId: item.productId ? item.productId._id : null,
               image: item.productId ? item.productId.image : null,
               title: item.productId ? item.productId.title : null,
+              category: item.productId ? item.productId.category : null,
+              brand: item.productId ? item.productId.brand : null,
               price: item.productId ? item.productId.price : null,
               salePrice: item.productId ? item.productId.salePrice : null,
               quantity: item.quantity,

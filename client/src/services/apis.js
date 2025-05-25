@@ -12,6 +12,7 @@ export const authEndpoints = {
 export const adminEndpoints = {
     CREATE_PRODUCT_API: BASE_URL + '/admin/products/create',
     FETCH_ALL_PRODUCTS_API: BASE_URL + '/admin/products/get',
+    FETCH_TOP_SELLING_PRODUCTS_API: BASE_URL + '/admin/products/get-top-selling',
     EDIT_PRODUCT_API: BASE_URL + '/admin/products/edit',
     DELETE_PRODUCT_API: BASE_URL + '/admin/products/delete',
     GET_ALL_ORDERS_API: BASE_URL + '/admin/order/get',

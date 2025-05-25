@@ -1,6 +1,6 @@
-import React, { Suspense, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link, useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom'
+import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 
 // shadcn ui components
 import { Sheet, SheetContent, SheetTrigger } from '../ui/sheet'
@@ -10,7 +10,8 @@ import { Avatar, AvatarFallback } from '../ui/avatar'
 import { Label } from '../ui/label'
 
 // icons
-import { HousePlug, LogInIcon, LogOut, Menu, ShoppingCart, UserCog, UserIcon } from 'lucide-react'
+import { LogInIcon, LogOut, Menu, ShoppingCart, UserCog, UserIcon } from 'lucide-react'
+import LogoIcon from '../../assets/logo.png'
 
 // config data
 import { shoppingMenuItems } from '@/config/userShop'
@@ -184,8 +185,11 @@ const ShoppingHeader = ( ) => {
     <header className='fixed top-0 z-40 w-full border-b bg-background'>
       <div className='flex h-16 items-center justify-between px-4 md:px-6'>
         <Link to='/shop/home' className='flex items-center gap-2'>
-          <HousePlug className='h-6 w-6'/>
-          <span className='font-bold'>Ecommerce</span>
+        <img
+          src={LogoIcon}
+          className='h-6 w-6'
+        />
+          <span className='font-bold'>Petmart Royle</span>
         </Link>
 
         {/* menu bar for smaller screens */}

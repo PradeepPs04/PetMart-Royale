@@ -1,4 +1,7 @@
+// importing models
 const Product = require("../../models/Product");
+
+// importing utility functions
 const deleteFromCloudinary = require("../../utils/fileDelete");
 const uploadFileToCloudinary = require("../../utils/fileUpload");
 
@@ -174,6 +177,32 @@ exports.deleteProduct = async (req, res) => {
             success: true,
             message: 'Product deleted successfully',
             data: deletedProduct,
+        });
+    } catch(err) {
+        console.error(err);
+        return res.status(500).json({
+            success: false,
+            message: "Internal server error",
+            error: err.message,
+        });
+    }
+}
+
+
+// controller to fetch top 10 selling products
+exports.fetchTopSellingProducts = async (req, res) => {
+    try {
+        // search products & sort them in descending order according to quanitySold
+        const topSellingProducts = await Product.find({})
+            .sort({quantitySold: -1})
+            .limit(10)
+            .exec();
+
+        // return success response
+        return res.status(200).json({
+            success: true,
+            message: "Top 10 selling products fetched successfully",
+            data: topSellingProducts,
         });
     } catch(err) {
         console.error(err);

@@ -13,6 +13,7 @@ const {
     EDIT_PRODUCT_API,
     DELETE_PRODUCT_API,
     FETCH_ALL_PRODUCTS_API,
+    FETCH_TOP_SELLING_PRODUCTS_API,
     GET_ALL_ORDERS_API,
     GET_ORDER_DETAILS_FOR_ADMIN_API,
     UPDATE_ORDER_STATUS_API,
@@ -223,6 +224,32 @@ export async function updateOrderStatus(orderId, orderStatus, dispatch) {
 
     dispatch(setAdminOrderLoading(false));
     toast.dismiss(toastId);
+
+    return result;
+}
+
+// functino to fetch top selling products
+export async function fetchTopSellingProducts(dispatch) {
+    dispatch(setLoading(true));
+    let result = null;
+
+    try {
+        const response = await apiConnector(
+            "GET",
+            FETCH_TOP_SELLING_PRODUCTS_API,
+        );
+
+        console.log("FETCH TOP SELLING PRODUCTS API response...", response);
+
+        if(!response?.data?.success) {
+            throw new Error("Can't fetch top selling products! Try again later");
+        }
+
+        result = response?.data?.data;
+    } catch(err) {
+        console.error("FETCH TOP SELLING PRODUCTS API error...", err);
+        toast.error(err?.response?.data?.message || err.message);
+    }
 
     return result;
 }

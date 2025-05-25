@@ -135,18 +135,14 @@ const ShoppingHome = () => {
     <div className='flex flex-col min-h-screen'>
 
     {/* image banners */}
-      <div className='relative w-full h-[600px] overflow-hidden'>
+      <div className='relative'>
         {
           featureImageList && featureImageList.length > 0 ? (
-          featureImageList.map((item, idx) => (
             <img
-              key={idx}
-              src={item.image}
+              src={featureImageList[currentSlide].image}
               loading='lazy'
-              className={`${idx === currentSlide ? 'opacity-100' : 'opacity-0 '}
-              absolute top-0 left-0 h-full w-full object-cover transition-opacity duration-1000`}
+              className='max-h-[600px] w-full object-cover'
             />
-          ))
           ) : null
         }
         {/* left button */}

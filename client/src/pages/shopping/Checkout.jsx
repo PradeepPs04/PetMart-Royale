@@ -39,6 +39,7 @@ const ShoppingCheckout = () => {
                       0
       ) : 0;
 
+
   // function to buy cart items
   const handleCheckout = async () => {
     if(cartItems.length === 0) {
@@ -58,6 +59,8 @@ const ShoppingCheckout = () => {
       cartItems: cartItems?.map(item => ({
           productId: item?.productId,
           title: item?.title,
+          brand: item?.brand,
+          category: item?.category,
           image: item?.image,
           price: item?.salePrice > 0 ? item?.salePrice : item?.price,
           quantity: item?.quantity,

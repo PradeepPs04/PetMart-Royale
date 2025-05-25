@@ -31,7 +31,11 @@ const productSchema = new mongoose.Schema({
     totalStock: {
         type: Number,
         required: true,
-    }
+    },
+    quantitySold: {
+        type: Number,
+        default: 0,
+    },
 }, {timestamps: true});
 
 module.exports = mongoose.model('Product', productSchema);

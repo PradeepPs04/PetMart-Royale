@@ -47,7 +47,7 @@ const UserCartWrapper = ({cartItems, setOpenCartSheet}) => {
         </SheetHeader>
 
         {/* cart items */}
-        <div className='mt-8 space-y-4'>
+        <div className='mt-8 space-y-4 max-h-[60vh] overflow-auto'>
             {
                 cartItems && cartItems?.length > 0 && cartItems.map((item, idx) => (
                     <UserCartContent key={idx} cartItem={item}/>

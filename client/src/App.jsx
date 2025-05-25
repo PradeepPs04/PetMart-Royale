@@ -34,8 +34,8 @@ import { setLoading } from './store/auth-slice';
 // APIs
 import { checkAuth } from './services/operations/authAPI';
 
-// shadcn ui components
-import { Skeleton } from './components/ui/skeleton';
+// Loader skeleton
+import HeaderSkeleton from './components/skeleton/shopping/HeaderSkeleton';
 
 
 const App = () => {
@@ -57,7 +57,11 @@ const App = () => {
 
   if(isLoading) {
     return (
-      <Skeleton className="w-[600px] h-[600px]" />
+      <div className='w-screen'>
+        <div className='px-4 md:px-6'>
+          <HeaderSkeleton />
+        </div>
+      </div>
     )
   }
 
@@ -68,7 +72,9 @@ const App = () => {
         <Route
           path='/'
           element={
-            <CheckAuth isAuthenticated={isAuthenticated} user={user}>
+            <CheckAuth 
+              isAuthenticated={isAuthenticated}
+              user={user}>
             </CheckAuth>
           }
         />
