@@ -3,8 +3,9 @@ import { useLocation, useNavigate } from 'react-router-dom'
 
 // icons
 import { LayoutDashboard, ShoppingBasket, Truck, ChartNoAxesCombined, ImagePlusIcon } from "lucide-react"
+
+// shadcn ui components
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '../ui/sheet'
-import { toast } from 'react-toastify';
 
 
 // items for admin side bar

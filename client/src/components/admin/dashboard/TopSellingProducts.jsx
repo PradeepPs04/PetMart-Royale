@@ -79,7 +79,7 @@ const TopSellingProducts = () => {
         </h2>
 
         {/* product cards */}
-        <div className='w-[80vw] overflow-scroll py-4'>
+        <div className='w-[89vw] md:w-[80vw] overflow-x-auto py-4'>
             <div className='mt-4 flex gap-6'>
                 {
                     topSellingProds && topSellingProds.length > 0 ? (
