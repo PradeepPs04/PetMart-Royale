@@ -27,6 +27,7 @@ import { DogIcon, ChevronLeft, ChevronRight, CatIcon, BirdIcon, BedIcon, Dice5 }
 
 // APIs
 import { getFeatureImages } from '@/services/operations/featureImageAPI'
+import HomePageSkeleton from '@/components/skeleton/shopping/HomePageSkeleton'
 
 // data for category cards
 const categories = [
@@ -56,7 +57,7 @@ const ShoppingHome = () => {
   const navigate = useNavigate();
 
   const { user } = useSelector(state => state.auth);
-  const { products, productDetails } = useSelector(state => state.shopProducts);
+  const { isLoading, products, productDetails } = useSelector(state => state.shopProducts);
   const { featureImageList } = useSelector(state => state.common);
 
   // go to selected category/brand page
@@ -131,18 +132,29 @@ const ShoppingHome = () => {
     fetchFeatureImages();
   }, [dispatch]);
 
+
+  // if loading display skeleton loader
+  if(isLoading) {
+    return <HomePageSkeleton/>
+  }
+
   return (
     <div className='flex flex-col min-h-screen'>
 
     {/* image banners */}
-      <div className='relative'>
+      <div className='relative w-full h-[200px] sm:h-[400px] md:h-[500px] lg:h-[600px] overflow-hidden'>
         {
           featureImageList && featureImageList.length > 0 ? (
-            <img
-              src={featureImageList[currentSlide].image}
-              loading='lazy'
-              className='max-h-[600px] w-full object-cover'
-            />
+            featureImageList.map((item, idx) => (
+              <img
+                src={item?.image}
+                key={idx}
+                className={`
+                  ${idx === currentSlide ? 'opacity-100' : 'opacity-0'}
+                  absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-1000
+                `}
+              />
+            ))
           ) : null
         }
         {/* left button */}
