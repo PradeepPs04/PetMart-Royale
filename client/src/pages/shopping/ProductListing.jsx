@@ -22,6 +22,7 @@ import { sortOptions } from '@/config/userShop'
 // APIs
 import { addToCart, fetchCartItems, fetchFilteredProducts, getProductDetails } from '@/services/operations/shopAPIs'
 import { toast } from 'react-toastify'
+import ProductListlingsSkeleton from '@/components/skeleton/shopping/ProductListlingsSkeleton'
 
 // create query params using selected options on filter
 const createSearchParamsFromFilter = (filterParams) => {
@@ -42,7 +43,7 @@ const ShoppingProductListing = () => {
   const dispatch = useDispatch();
 
   const { user } = useSelector(state => state.auth);
-  const { products, productDetails, relatedProducts } = useSelector((state) => state.shopProducts);
+  const { isLoading, products, productDetails, relatedProducts } = useSelector((state) => state.shopProducts);
   const { cartItems } = useSelector(state => state.shopCart);
 
   const [filters, setFilters] = useState({});
@@ -169,6 +170,12 @@ const ShoppingProductListing = () => {
       setOpenProdDetailsDialog(true);
     }
   }, [productDetails]);
+
+
+  // if loading display skeleton loader
+  if(isLoading) {
+    return <ProductListlingsSkeleton/>
+  }
 
   return (
     <div className='grid grid-cols-1 md:grid-cols-[300px_1fr] gap-6 p-4 md:p-6'>
