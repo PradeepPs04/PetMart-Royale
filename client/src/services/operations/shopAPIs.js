@@ -7,10 +7,20 @@ import { shopEndpoints } from "../apis";
 import { cartEndpoints } from "../apis";
 
 // shop reducers
-import { setLoading, setProductDetails, setProducts, setRelatedProducts } from "@/store/shop/product-slice";
+import { 
+    setLoading, 
+    setProductDetails, 
+    setProductDetailsLoading, 
+    setProducts, 
+    setRelatedProducts 
+} from "@/store/shop/product-slice";
 
 // cart reducers
-import { setCartLoading, setCartItems, setCartId } from "@/store/shop/cart-slice";
+import { 
+    setCartLoading, 
+    setCartItems, 
+    setCartId 
+} from "@/store/shop/cart-slice";
 
 // shop API URLs
 const {
@@ -61,7 +71,7 @@ export async function fetchFilteredProducts(filterParams, sortParams, dispatch) 
 // function to call get product details api
 export async function getProductDetails(id, dispatch) {
     const toastId = toast.loading("Loading...");
-    dispatch(setLoading(true));
+    dispatch(setProductDetailsLoading(true));
 
     try {
         const response = await apiConnector(

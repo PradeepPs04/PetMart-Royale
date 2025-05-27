@@ -1,29 +1,42 @@
 import React, { useEffect, useState } from 'react'
-import { useParams, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
+
+// redux store actions
+import { setSearchResults } from '@/store/shop/search-slice';
+
+// icons
+import { SearchIcon } from 'lucide-react';
 
 // components
 import ShoppingProductTile from '@/components/shopping/ProductTile';
+import PaginationWrapper from '@/components/common/PaginationWrapper';
+import ProductDetailsDialog from '@/components/shopping/ProductDetails';
+
+// skeleton loader
+import SearchSkeleton from '@/components/skeleton/shopping/SearchSkeleton';
 
 // shadcn ui components
 import { Input } from '@/components/ui/input'
+import { Button } from '@/components/ui/button';
 
 // APIs
 import { searchProducts } from '@/services/operations/searchAPI';
-
-import { setSearchResults } from '@/store/shop/search-slice';
 import { addToCart, fetchCartItems, getProductDetails } from '@/services/operations/shopAPIs';
-import { toast } from 'react-toastify';
-import ProductDetailsDialog from '@/components/shopping/ProductDetails';
 
 const SearchProducts = () => {
 
     const [keyword, setKeyword] = useState('');
     const [openProdDetailsDialog, setOpenProdDetailsDialog] = useState(false);
 
-    const [searchParams, setSearchParams] = useSearchParams();
+    // for pagination
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 12;
 
-    const { searchResults } = useSelector(state => state.shopSearch);
+    const [_, setSearchParams] = useSearchParams();
+
+    const { isSearchLoading, searchResults } = useSelector(state => state.shopSearch);
     const { cartItems } = useSelector(state => state.shopCart);
     const { productDetails } = useSelector(state => state.shopProducts);
 
@@ -64,8 +77,8 @@ const SearchProducts = () => {
     await getProductDetails(productId, dispatch);
     }
 
-    // fetch searched products
-    useEffect(() => {
+    // function to search products
+    const handleSearch = () => {
         if(keyword && keyword.trim() !== '' && keyword.trim().length >= 3) {
             setTimeout(async () => {
                 setSearchParams(new URLSearchParams(`?keyword=${keyword}`));
@@ -75,7 +88,7 @@ const SearchProducts = () => {
                 setSearchParams(new URLSearchParams(`?keyword=${keyword}`));
             dispatch(setSearchResults([]));
         }
-    }, [keyword]);
+    }
 
     // fetch products details
     useEffect(() => {
@@ -86,39 +99,69 @@ const SearchProducts = () => {
 
   return (
     <div className='container mx-auto md:px-6 px-4 py-8'>
-        <div className='flex justify-center mb-8'>
-            <div className='w-full flex items-center'>
+        {/* search box */}
+        <div className='flex flex-col sm:flex-row justify-center gap-4 mb-8'>
+            <div className='relative w-full flex items-center'>
+                <SearchIcon className='absolute left-2 text-muted-foreground opacity-50'/>
                 <Input
                     value={keyword}
                     name="keyword"
                     onChange={(e) => setKeyword(e.target.value)}
                     placeholder="Search products..."
-                    className='py-6'
+                    className='px-10 py-6'
                 />
+            </div>
+
+            {/* serach button */}
+            <div className='w-full sm:w-fit'>
+                <Button 
+                    onClick={handleSearch}
+                    className='cursor-pointer py-6 px-10 w-full'
+                >
+                    Search
+                </Button>
             </div>
         </div>
 
-        {/* no result found heading */}
-        <div>
-            {
-                !searchResults.length ? (
-                    <h1 className='text-5xl font-extrabold'>No result found!</h1>
-                ) : null
-            }
-        </div>
+        {/* display skeleton loader or products */}
+        {
+            isSearchLoading 
+                ? (<SearchSkeleton/>)
+                : (
+                    !searchResults.length ? (
+                        <h1 className='text-5xl font-extrabold text-center text-muted-foreground opacity-50'>No Result Found!</h1>
+                    ) : (
+                        // product cards
+                        <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5'>
+                            {
+                                [...searchResults]
+                                    .slice((currentPage-1)*itemsPerPage, (currentPage)*itemsPerPage).map(item => (
+                                        <ShoppingProductTile
+                                            key={item._id}
+                                            product={item}
+                                            handleAddToCart={handleAddToCart}
+                                            handleGetProductDetails={handleGetProductDetails}
+                                        />
+                                    ))
+                            }
+                        </div>
+                    )
+                )
+        }
 
-        <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5'>
-            {
-                searchResults.map(item => (
-                    <ShoppingProductTile
-                        key={item._id}
-                        product={item}
-                        handleAddToCart={handleAddToCart}
-                        handleGetProductDetails={handleGetProductDetails}
+        {/* Pagination */}
+        {
+            searchResults && searchResults?.length > 0 && (
+                <div className='mt-6'>
+                    <PaginationWrapper
+                    totalItems={searchResults?.length}
+                    itemsPerPage={itemsPerPage}
+                    currentPage={currentPage}
+                    setCurrentPage={setCurrentPage}
                     />
-                ))
-            }
-        </div>
+                </div>
+            )
+        }
 
         {/* product details dialog */}
         <ProductDetailsDialog
@@ -127,6 +170,7 @@ const SearchProducts = () => {
           product={productDetails}
           handleAddToCart={handleAddToCart}
         />
+
     </div>
   )
 }
