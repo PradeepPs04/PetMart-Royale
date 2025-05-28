@@ -13,8 +13,8 @@ import {
 
 const OrdersSkeleton = () => {
   return (
-    <div className="animate-pulse">
-      <div className="relative h-[150px] sm:h-[200px] md:h-[250px] lg:h-[300px] w-full">
+    <div className="mt-1 animate-pulse">
+      <div className="relative min-h-[150px] sm:min-h-[200px] md:min-h-[250px] lg:min-h-[300px] w-full">
         <div className="p-6 h-full w-full bg-gray-200 rounded-xl">
           {/* heading */}
           <h2 className="h-6 w-24 bg-gray-300 rounded"></h2>
