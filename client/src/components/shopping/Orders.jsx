@@ -90,8 +90,13 @@ const ShoppingOrders = () => {
                     </TableCell>
                     
                     <TableCell>
-                      <Badge className={`py-1 px-3 ${orderItem?.orderStatus === 'confirmed' ? 'bg-green-500' : 
-                      orderItem?.orderStatus === 'rejected' ? 'bg-red-600' : 'bg-black'}`}>
+                      <Badge className={`py-1 px-3 capitalize 
+                        ${orderItem?.orderStatus === 'confirmed' 
+                          ? 'bg-green-500' 
+                          : orderItem?.orderStatus === 'rejected' 
+                            ? 'bg-red-600' 
+                            : 'bg-black'}`}
+                        >
                         {orderItem?.orderStatus}
                       </Badge>
                     </TableCell>

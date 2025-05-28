@@ -37,20 +37,20 @@ const ShoppingOrderDetailsView = ({orderDetails}) => {
                     {/* Payment method */}
                     <div className='mt-2 flex items-center justify-between'>
                         <p className='font-medium'>Payment Method</p>
-                        <Label>{orderDetails?.paymentMethod}</Label>
+                        <Label className='capitalize'>{orderDetails?.paymentMethod}</Label>
                     </div>
 
                     {/* Payment status */}
                     <div className='mt-2 flex items-center justify-between'>
                         <p className='font-medium'>Payment Status</p>
-                        <Label>{orderDetails?.paymentStatus}</Label>
+                        <Label className='capitalize'>{orderDetails?.paymentStatus}</Label>
                     </div>
 
                     {/* order status */}
                     <div className='mt-2 flex items-center justify-between'>
                         <p className='font-medium'>Order Status</p>
                         <Label> 
-                            <Badge className={`py-1 px-3 
+                            <Badge className={`py-1 px-3 capitalize
                                 ${orderDetails?.orderStatus === 'confirmed' 
                                     ? 'bg-green-500' 
                                     : orderDetails?.orderStatus === 'rejected' 

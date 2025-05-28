@@ -68,7 +68,7 @@ const OrdersSkeleton = () => {
 
                         {/* view details button */}
                         <TableCell>
-                        <Button className='w-[6.8rem] bg-gray-300'></Button>
+                        <Button className='w-[6.8rem] bg-gray-300 hover:bg-gray-300'></Button>
                         </TableCell>
                     </TableRow>
                     </TableBody>

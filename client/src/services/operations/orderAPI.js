@@ -165,8 +165,7 @@ export async function getUserOrders(userId, dispatch) {
 
 // function to call get order details api
 export async function getOrderDetails(orderId, dispatch) {
-    const toastId = toast.loading("Loading...");
-    dispatch(setOrderLoading(true));
+    const toastId = toast.loading("Loading...", {position: 'top-center'});
 
     try {
         const response = await apiConnector(
@@ -187,6 +186,5 @@ export async function getOrderDetails(orderId, dispatch) {
         toast.error(err?.response?.data?.message || err.message);
     }
 
-    dispatch(setOrderLoading(false));
     toast.dismiss(toastId);
 }
