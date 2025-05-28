@@ -14,8 +14,14 @@ import { Badge } from '../ui/badge'
 // components
 import ShoppingOrderDetailsView from './OrderDetails'
 
+// skeleton loader component
+import OrdersSkeleton from '../skeleton/shopping/OrdersSkeleton'
+
 // APIs
-import { getOrderDetails, getUserOrders } from '@/services/operations/orderAPI'
+import { 
+  getOrderDetails, 
+  getUserOrders 
+} from '@/services/operations/orderAPI'
 
 const ShoppingOrders = () => {
 
@@ -23,7 +29,7 @@ const ShoppingOrders = () => {
   
   const dispatch = useDispatch();
   const { user } = useSelector(state => state.auth);
-  const { orderList, orderDetails } = useSelector(state => state.order);
+  const { isOrderLoading, orderList, orderDetails } = useSelector(state => state.order);
 
   // get order details
   const handleFetchOrderDetails = async (orderId) => {
@@ -43,6 +49,11 @@ const ShoppingOrders = () => {
       setOpenDetailsDialog(true);
     }
   }, [orderDetails]);
+
+  // if loading display skeleton loader
+  if(isOrderLoading) {
+    return <OrdersSkeleton/>
+  }
 
   return (
     <Card>

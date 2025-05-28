@@ -15,7 +15,7 @@ const ShoppingAccount = () => {
     <div className='flex flex-col'>
 
       {/* banner images */}
-      <div className='relative h-[300px] w-full overflow-hidden'>
+      <div className='relative h-[150px] sm:h-[200px] md:h-[250px] lg:h-[300px] w-full overflow-hidden'>
         <img
           src={accImg}
           loading='lazy'

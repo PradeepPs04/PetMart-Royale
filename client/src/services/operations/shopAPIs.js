@@ -38,7 +38,6 @@ const {
 
 // function to call fetch products api
 export async function fetchFilteredProducts(filterParams, sortParams, dispatch) {
-    const toastId = toast.loading("Loading...");
     dispatch(setLoading(true));
 
     try {
@@ -57,20 +56,17 @@ export async function fetchFilteredProducts(filterParams, sortParams, dispatch) 
 
         // set products in shop products slice
         dispatch(setProducts(response?.data?.data));
-
-        toast.success(response?.data?.message);
     } catch(err) {
         console.error("FETCH PRODUCTS API error...", err);
         toast.error(err?.response?.data?.message || err.message);
     }
 
-    toast.dismiss(toastId);
     dispatch(setLoading(false));
 }
 
 // function to call get product details api
 export async function getProductDetails(id, dispatch) {
-    const toastId = toast.loading("Loading...");
+    const toastId = toast.loading("Loading...", {position: 'top-center'});
     dispatch(setProductDetailsLoading(true));
 
     try {
@@ -90,8 +86,6 @@ export async function getProductDetails(id, dispatch) {
 
         // set related products
         dispatch(setRelatedProducts(response?.data?.data?.relatedProducts));
-
-        toast.success(response?.data?.message);
     } catch(err) {
         console.error("GET PRODUCT DETAILS API error...", err);
         toast.error(err?.response?.data?.message || err.message);
@@ -162,8 +156,7 @@ export async function fetchCartItems(dispatch) {
 
 // function to call update cart item quantity api
 export async function updateCartItem(data, dispatch) {
-    const toastId = toast.loading("Loading...");
-    dispatch(setCartLoading(true)); 
+    dispatch(setCartLoading(true));
 
     try {
         const response = await apiConnector(
@@ -185,14 +178,12 @@ export async function updateCartItem(data, dispatch) {
         toast.error(err?.response?.data?.message || err.message);
     }
 
-    toast.dismiss(toastId);
     dispatch(setCartLoading(false));
 }
 
 // function to call delete from cart api
 export async function deleteFromCart(productId, dispatch) {
-    const toastId = toast.loading("Loading...");
-    dispatch(setCartLoading(true)); 
+    dispatch(setCartLoading(true));
 
     try {
         const response = await apiConnector(
@@ -215,6 +206,5 @@ export async function deleteFromCart(productId, dispatch) {
         toast.error(err?.response?.data?.message || err.message);
     }
 
-    toast.dismiss(toastId);
     dispatch(setCartLoading(false));
 }

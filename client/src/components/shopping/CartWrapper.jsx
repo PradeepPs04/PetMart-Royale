@@ -1,6 +1,7 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 
 // shadcn ui components
 import { SheetContent, SheetHeader, SheetTitle } from '../ui/sheet'
@@ -8,11 +9,14 @@ import { Button } from '../ui/button'
 
 // components
 import UserCartContent from './CartContent';
-import { toast } from 'react-toastify';
+
+// skeleton loader component
+import CartSkeleton from '../skeleton/shopping/CartSkeleton';
 
 const UserCartWrapper = ({cartItems, setOpenCartSheet}) => {
 
     const { user } = useSelector(state => state.auth);
+    const { isLoading } = useSelector(state => state.shopCart);
     
     const navigate = useNavigate();
 
@@ -42,12 +46,13 @@ const UserCartWrapper = ({cartItems, setOpenCartSheet}) => {
 
   return (
     <SheetContent className='sm:max-w-md'>
+        {/* heading */}
         <SheetHeader>
             <SheetTitle>Your Cart</SheetTitle>
         </SheetHeader>
 
         {/* cart items */}
-        <div className='mt-8 space-y-4 max-h-[60vh] overflow-auto'>
+        <div className='mt-8 space-y-4 max-h-[60vh] overflow-auto p-2'>
             {
                 cartItems && cartItems?.length > 0 && cartItems.map((item, idx) => (
                     <UserCartContent key={idx} cartItem={item}/>
@@ -66,6 +71,7 @@ const UserCartWrapper = ({cartItems, setOpenCartSheet}) => {
         {/* checkout button */}
         <div className='px-4'>
             <Button 
+                disabled={cartItems?.length > 0 ? false : true}
                 onClick={handleNavigateToCheckout}
                 className='w-full mt-6 cursor-pointer'
             >

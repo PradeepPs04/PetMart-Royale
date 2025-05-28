@@ -13,8 +13,16 @@ import { Card, CardContent, CardHeader, CardTitle } from '../ui/card'
 import AddressCard from './AddressCard'
 import CommonForm from '../common/Form'
 
+// skeleton loader component
+import AddressSkeleton from '../skeleton/shopping/AddressSkeleton'
+
 // APIs
-import { addAddress, deleteAddress, editAddress, fetchAllAddresses } from '@/services/operations/addressAPIs'
+import { 
+    addAddress,
+    deleteAddress, 
+    editAddress, 
+    fetchAllAddresses 
+} from '@/services/operations/addressAPIs'
 
 const initialFormData = {
     address: '',
@@ -32,7 +40,7 @@ const Address = ({currentSelectedAddress, setCurrentSelectedAddress}) => {
     const location = useLocation();
 
     const { user } = useSelector((state) => state.auth);
-    const { addressList } = useSelector((state) => state.address);
+    const { isAddressLoading, addressList } = useSelector((state) => state.address);
 
     // function to add/edit an address
     const handleSubmitAddress = (e) => {
@@ -117,17 +125,23 @@ const Address = ({currentSelectedAddress, setCurrentSelectedAddress}) => {
         getAddresses();
     }, []);
 
+    // if loading display skeleton loader
+    if(isAddressLoading) {
+        return <AddressSkeleton/>
+    }
+
   return (
     <Card>
         {/* heading only for checkout page */}
         {
-            location.pathname.split('/').at(-1) === 'checkout' ? (
+            location.pathname.split('/').at(-1) === 'checkout' && (
                 <CardHeader className='-mb-6'>
                     <h3 className='font-bold text-lg'>Select Shipping Address</h3>
                 </CardHeader>
-            ) : null
+            )
         }
 
+        {/* address cards */}
         <div className='mb-5 p-3 grid grid-cols-1 sm:grid-cols-2  gap-2'>
             {
                 addressList && addressList.length > 0 ? (
@@ -145,27 +159,35 @@ const Address = ({currentSelectedAddress, setCurrentSelectedAddress}) => {
             }
         </div>
 
-        <CardHeader>
-            <CardTitle>
-                {
-                    currentEditedId 
-                    ? 'Edit Address'
-                    : 'Add new address'
-                }
-            </CardTitle>
-        </CardHeader>
         
-        {/* address form */}
-        <CardContent className='space-y-3'>
-            <CommonForm 
-                formControls={addressFormControls}
-                formData={formData}
-                setFormData={setFormData}
-                buttonText={currentEditedId ? 'Save Changes' : 'Add'}
-                onSubmit={handleSubmitAddress}
-                isButtonDisabled={!isFormFilled()}
-            />
-        </CardContent>
+        {/* address form only for account page */}
+        {
+            location.pathname.split('/').at(-1) === 'account' && (
+                <>
+                    <CardHeader>
+                    <CardTitle>
+                        {
+                            currentEditedId 
+                            ? 'Edit Address'
+                            : 'Add new address'
+                        }
+                    </CardTitle>
+                    </CardHeader>
+
+                    <CardContent className='space-y-3'>
+                    <CommonForm 
+                        formControls={addressFormControls}
+                        formData={formData}
+                        setFormData={setFormData}
+                        buttonText={currentEditedId ? 'Save Changes' : 'Add'}
+                        onSubmit={handleSubmitAddress}
+                        isButtonDisabled={!isFormFilled()}
+                    />
+                    </CardContent>
+                </>
+            )
+        }
+
     </Card>
   )
 }

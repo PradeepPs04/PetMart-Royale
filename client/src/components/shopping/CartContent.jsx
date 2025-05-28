@@ -23,6 +23,7 @@ const UserCartContent = ({cartItem}) => {
     await deleteFromCart(cartItem?.productId, dispatch);
   }
 
+  // update item quantity in cart
   const handleUpdateQuantity = async (cartItem, type) => {
     if(type === 'plus') {
       let getCartItems = cartItems || [];
@@ -61,7 +62,7 @@ const UserCartContent = ({cartItem}) => {
     }
 
   return (
-    <div className='flex items-center space-x-4 p-4'>
+    <div className='flex items-center space-x-4 p-4 outline rounded-lg'>
         <img 
           src={cartItem?.image}
           alt={cartItem?.title}
