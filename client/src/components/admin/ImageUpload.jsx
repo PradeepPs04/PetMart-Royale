@@ -5,11 +5,10 @@ import { Label } from '../ui/label'
 import { Input } from '../ui/input'
 
 // icons
-import { FileIcon, UploadCloud, XIcon } from 'lucide-react';
+import { UploadCloud, XIcon } from 'lucide-react';
 import { Button } from '../ui/button';
  
 const ProductImageUpload = ({
-    file,
     setFile,
     imagePreview,
     setImagePreview,
@@ -30,6 +29,7 @@ const ProductImageUpload = ({
         e.preventDefault();
     }
     
+    // function to handle file drop on input box
     const handleDrop = (e) => {
         e.preventDefault();
         const droppedFile = e.dataTransfer.files[0];
@@ -39,6 +39,7 @@ const ProductImageUpload = ({
         }
     }
 
+    // function to remove input image
     const handleRemoveImage = (e) => {
         setFile(null);
         if(inputRef.current) {
@@ -83,9 +84,9 @@ const ProductImageUpload = ({
                             variant='ghost'
                             size='icon'
                             onClick={handleRemoveImage}
-                            className='text-muted-foreground hover:text-foreground'
+                            className='hover:bg-red-500 bg-red-400 cursor-pointer'
                         >
-                            <XIcon className='w-4 h-4'/>
+                            <XIcon className='w-4 h-4 text-white'/>
                             <span className='sr-only'>Remove File</span>
                         </Button>
                     </div>

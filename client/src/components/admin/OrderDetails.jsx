@@ -29,7 +29,7 @@ const statusFormControls = [
     }
 ]
 
-const AdminOrderDetailsView = ({orderDetails}) => {
+const AdminOrderDetailsView = ({orderDetails, setOpenDetailsDialog}) => {
     
     const [formData, setFormData] = useState(initialFormData);
     
@@ -43,7 +43,7 @@ const AdminOrderDetailsView = ({orderDetails}) => {
         const {status} = formData;
 
         // update order status
-        updateOrderStatus(orderDetails?._id, status, dispatch).then(result => {
+        updateOrderStatus(orderDetails?._id, status).then(result => {
             if(result) {
                 console.log("result is: ", result);
                 // set order details in store

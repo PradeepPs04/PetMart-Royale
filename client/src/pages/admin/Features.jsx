@@ -5,6 +5,9 @@ import { useDispatch, useSelector } from 'react-redux';
 // components
 import ProductImageUpload from '@/components/admin/ImageUpload';
 
+// skeleton component
+import FeaturesSkeleton from '@/components/skeleton/admin/FeaturesSkeleton';
+
 // shadcn ui components
 import { Button } from '@/components/ui/button';
 
@@ -19,8 +22,9 @@ const AdminFeatures = () => {
 
   const dispatch = useDispatch();
 
-  const { featureImageList } = useSelector(state => state.common);
+  const { isLoading, featureImageList } = useSelector(state => state.common);
 
+  // function to upload feature image
   const hanldeImageUpload = async () => {
     if(!imageFile) {
       toast.error("Please select a file");
@@ -28,7 +32,7 @@ const AdminFeatures = () => {
     }
 
     // call api
-    const result = await addFeatureImage(imageFile, dispatch);
+    const result = await addFeatureImage(imageFile);
 
     // reset states & fetch all feature image
     if(result) {
@@ -42,7 +46,7 @@ const AdminFeatures = () => {
   // function to delete feature image
   const handleDelete = (item) => {
     // call delete feature image api
-    deleteFeatureImage(item._id, dispatch)
+    deleteFeatureImage(item._id)
     .then(result => {
       if(result) {
         // call fetch all feature images api
@@ -59,11 +63,16 @@ const AdminFeatures = () => {
     fetchFeatureImages();
   }, []);
 
+  
+  // if loading display skeleton loader
+  if(isLoading) {
+    return <FeaturesSkeleton/>
+  }
+
   return (
     <div className='flex flex-col items-center gap-6'>
           {/* image container */}
           <ProductImageUpload
-            file={imageFile}
             setFile={setImageFile}
             imagePreview={imagePreview}
             setImagePreview={setImagePreview}
@@ -86,6 +95,7 @@ const AdminFeatures = () => {
               featureImageList && featureImageList.length > 0 ? (
                 featureImageList.map(item => (
                   <div className='flex flex-col items-center gap-2'>
+                    {/* banner image */}
                     <img
                       key={item._id}
                       src={item.image}
@@ -93,6 +103,7 @@ const AdminFeatures = () => {
                       className='w-[80%] mx-auto max-h-[500px] object-cover rounded-lg'
                     />
 
+                    {/* delete button */}
                     <Button 
                       onClick={() => handleDelete(item)}
                       className='bg-red-500 hover:bg-red-600 cursor-pointer'

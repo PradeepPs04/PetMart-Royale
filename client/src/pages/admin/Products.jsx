@@ -65,7 +65,7 @@ const AdminProducts = () => {
     // check if edit mode
     if(currentEditId) {
       // call edit product api
-      editProduct(currentEditId, data, dispatch)
+      editProduct(currentEditId, data)
       .then((response) => {
         if(response) {
           // fetch all products
@@ -96,7 +96,7 @@ const AdminProducts = () => {
 
   // function to delete a product
   const handleDelete = (productId) => {
-    deleteProduct(productId, dispatch)
+    deleteProduct(productId)
     .then((response) => {
       if(response) {
         fetchAllProducts(dispatch);

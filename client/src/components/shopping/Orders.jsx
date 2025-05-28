@@ -124,6 +124,7 @@ const ShoppingOrders = () => {
                         {/* order details dialog */}
                         <ShoppingOrderDetailsView
                           orderDetails={orderDetails}
+                          setOpenDetailsDialog={setOpenDetailsDialog}
                         />
                       </Dialog>
 

@@ -86,10 +86,9 @@ export async function fetchAllProducts(dispatch) {
 }
 
 // function to call edit product api
-export async function editProduct(id, formData, dispatch) {
+export async function editProduct(id, formData) {
     const toastId = toast.loading("Loading...");
     let result = null;
-    dispatch(setLoading(true));
 
     try {
         const response = await apiConnector(
@@ -113,16 +112,14 @@ export async function editProduct(id, formData, dispatch) {
     }
 
     toast.dismiss(toastId);
-    dispatch(setLoading(false));
 
     return result;
 }
 
 // function to call delete product api
-export async function deleteProduct(id, dispatch) {
-    const toastId = toast.loading("Loading...");
+export async function deleteProduct(id) {
+    const toastId = toast.loading("Deleting...");
     let result = null;
-    dispatch(setLoading(true));
 
     try {
         const response = await apiConnector(
@@ -146,7 +143,6 @@ export async function deleteProduct(id, dispatch) {
     }
 
     toast.dismiss(toastId);
-    dispatch(setLoading(false));
 
     return result;
 }
@@ -179,7 +175,6 @@ export async function getAllOrders(dispatch) {
 // function to call get order details for admin api
 export async function getOrderDetailsForAdmin(id, dispatch) {
     const toastId = toast.loading("Loading...");
-    dispatch(setAdminOrderLoading(true));
 
     try {
         const response = await apiConnector("GET", `${GET_ORDER_DETAILS_FOR_ADMIN_API}/${id}`);
@@ -197,14 +192,12 @@ export async function getOrderDetailsForAdmin(id, dispatch) {
         toast.error(err?.response?.data?.message || err.message);
     }
 
-    dispatch(setAdminOrderLoading(true));
     toast.dismiss(toastId);
 }
 
 // function to call update order status api
-export async function updateOrderStatus(orderId, orderStatus, dispatch) {
+export async function updateOrderStatus(orderId, orderStatus) {
     const toastId = toast.loading("Loading...");
-    dispatch(setAdminOrderLoading(true));
     let result = null;
 
     try {
@@ -227,7 +220,6 @@ export async function updateOrderStatus(orderId, orderStatus, dispatch) {
         toast.error(err?.response?.data?.message || err.message);
     }
 
-    dispatch(setAdminOrderLoading(false));
     toast.dismiss(toastId);
 
     return result;

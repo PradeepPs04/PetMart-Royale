@@ -5,7 +5,7 @@ const ProductsSekeleton = () => {
     <div class="animate-pulse">
       {/* add product button */}
       <div class="mb-5 flex justify-end">
-        <div class="h-10 bg-gray-200 w-40 rounded-lg"></div>
+        <div class="h-10 bg-gray-200 w-40 rounded-md"></div>
       </div>
 
       {/* products */}
@@ -29,8 +29,8 @@ const ProductsSekeleton = () => {
 
                     {/* buttons */}
                     <div className="mt-4 px-6 flex justify-between">
-                        <div className="h-10 w-15 rounded-lg bg-gray-200"></div>
-                        <div className="h-10 w-[4.5rem] rounded-lg bg-gray-200"></div>
+                        <div className="h-10 w-15 rounded-md bg-gray-200"></div>
+                        <div className="h-10 w-[4.5rem] rounded-md bg-gray-200"></div>
                     </div>
                 </div>
             ))

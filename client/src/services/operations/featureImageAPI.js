@@ -11,9 +11,8 @@ const {
 } = featureImageEndpoints;
 
 // function to call add feature image api
-export async function addFeatureImage(image, dispatch) {
+export async function addFeatureImage(image) {
     const toastId = toast.loading("Uploading...");
-    dispatch(setLoading(true));
     let result = null;
 
     try {
@@ -37,7 +36,6 @@ export async function addFeatureImage(image, dispatch) {
         toast.error(err?.response?.data?.message || err.message);
     }
 
-    dispatch(setLoading(false));
     toast.dismiss(toastId);
 
     return result;
@@ -70,9 +68,8 @@ export async function getFeatureImages(dispatch) {
 }
 
 // function to call delete feature image api
-export async function deleteFeatureImage(featureId, dispatch) {
+export async function deleteFeatureImage(featureId) {
     const toastId = toast.loading("Deleting...");
-    dispatch(setLoading(true));
 
     let success = false;
 
@@ -96,7 +93,6 @@ export async function deleteFeatureImage(featureId, dispatch) {
     }
 
     toast.dismiss(toastId);
-    dispatch(setLoading(false));
 
     return success;
 }
