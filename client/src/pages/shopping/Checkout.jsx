@@ -13,12 +13,15 @@ import { Button } from '@/components/ui/button'
 import Address from '@/components/shopping/Address'
 import UserCartContent from '@/components/shopping/CartContent'
 
+// skeleton components
+import CartSkeleton from '@/components/skeleton/shopping/CartSkeleton'
+
 // APIs
 import { createOrder } from '@/services/operations/orderAPI'
 
 const ShoppingCheckout = () => {
 
-  const { cartId, cartItems } = useSelector(state => state.shopCart);
+  const { isLoading, cartId, cartItems } = useSelector(state => state.shopCart);
   const { user } = useSelector(state => state.auth);
 
   const dispatch = useDispatch();
@@ -86,6 +89,8 @@ const ShoppingCheckout = () => {
     await createOrder(orderData, user, dispatch, navigate);
   }
 
+  console.log(cartItems);
+
   return (
     <div className='flex flex-col'>
         {/* banner image */}
@@ -105,35 +110,56 @@ const ShoppingCheckout = () => {
               setCurrentSelectedAddress={setCurrentSelectedAddress}
             />
 
-          {/* cart items */}
-          <div className='flex flex-col gap-4'>
-            {
-              cartItems && cartItems.length > 0 ? (
-                cartItems.map(item => <UserCartContent
-                  key={item.productId}
-                  cartItem={item}
-                />)
-              ) : null
-            }
+          {/* skeleton loader or cart items */}
+          {
+            isLoading ? (
+              <div className='-mt-10 -mx-2'>
+                <CartSkeleton/>
+              </div>
+            ) : (
+              <div className='flex flex-col gap-4'>
+                {
+                  cartItems && cartItems.length > 0 ? (
+                    cartItems.map(item => (
+                      <UserCartContent
+                        key={item.productId}
+                        cartItem={item}
+                      />
+                    ))
+                  ) : null
+                }
 
-            {/* total cart price */}
-            <div className='px-4 mt-8 space-y-4'>
-                <div className='flex justify-between text-lg'>
-                    <span className='font-black'>Total</span>
-                    <span className='font-black'>₹{totalCartAmount}</span>
+                {/* total cart price */}
+                <div className='px-4 mt-8 space-y-4'>
+                    <div className='flex justify-between text-lg'>
+                        <span className='font-black'>Total</span>
+                        <span className='font-black'>₹{totalCartAmount}</span>
+                    </div>
                 </div>
-            </div>
-            
-            {/* Checkout button */}
-            <div className='mt-4 w-full'>
-              <Button 
-                onClick={handleCheckout}
-                className='cursor-pointer w-full'
-              >
-                Checkout with Razorpay
-              </Button>
-            </div>
-          </div>
+                
+                {/* Checkout button */}
+                <div className='mt-4 w-full'>
+                  {
+                    cartItems?.length > 0 ? (
+                      <Button 
+                        onClick={handleCheckout}
+                        className='cursor-pointer w-full'
+                      >
+                        Checkout
+                      </Button>
+                    ) : (
+                      <Button 
+                        disabled={true} 
+                        className='w-full'
+                      >
+                        You cart is empty
+                      </Button>
+                    )
+                  }
+                </div>
+              </div>
+            )
+          }
 
         </div>
     </div>

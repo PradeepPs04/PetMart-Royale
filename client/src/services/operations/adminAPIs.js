@@ -57,6 +57,8 @@ export async function fetchAllProducts(dispatch) {
     const toastId = toast.loading("Loading...");
     dispatch(setLoading(true));
 
+    let result = null;
+
     try {
         const response = await apiConnector('GET', FETCH_ALL_PRODUCTS_API);
 
@@ -69,6 +71,8 @@ export async function fetchAllProducts(dispatch) {
         // set products in admin products slice
         dispatch(setProducts(response?.data?.data));
 
+        result = response?.data?.data;
+
         toast.success(response?.data?.message);
     } catch(err) {
         console.error("FETCH PRODUCTS API error...", err);
@@ -78,6 +82,7 @@ export async function fetchAllProducts(dispatch) {
     toast.dismiss(toastId);
     dispatch(setLoading(false));
 
+    return result;
 }
 
 // function to call edit product api

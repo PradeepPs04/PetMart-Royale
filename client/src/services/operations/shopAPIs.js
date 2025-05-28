@@ -99,7 +99,6 @@ export async function getProductDetails(id, dispatch) {
 export async function addToCart(data, dispatch) {
     const toastId = toast.loading("Loading...");
     let success = false;
-    dispatch(setCartLoading(true)); 
 
     try {
         const response = await apiConnector(
@@ -122,7 +121,6 @@ export async function addToCart(data, dispatch) {
     }
 
     toast.dismiss(toastId);
-    dispatch(setCartLoading(false));
 
     return success;
 }
@@ -156,8 +154,6 @@ export async function fetchCartItems(dispatch) {
 
 // function to call update cart item quantity api
 export async function updateCartItem(data, dispatch) {
-    dispatch(setCartLoading(true));
-
     try {
         const response = await apiConnector(
             'PUT',
@@ -177,14 +173,10 @@ export async function updateCartItem(data, dispatch) {
         console.error("UPDATE CART API error...", err);
         toast.error(err?.response?.data?.message || err.message);
     }
-
-    dispatch(setCartLoading(false));
 }
 
 // function to call delete from cart api
 export async function deleteFromCart(productId, dispatch) {
-    dispatch(setCartLoading(true));
-
     try {
         const response = await apiConnector(
             'DELETE',
@@ -205,6 +197,4 @@ export async function deleteFromCart(productId, dispatch) {
         console.error("DELETE FROM CART API error...", err);
         toast.error(err?.response?.data?.message || err.message);
     }
-
-    dispatch(setCartLoading(false));
 }

@@ -51,33 +51,42 @@ const UserCartWrapper = ({cartItems, setOpenCartSheet}) => {
             <SheetTitle>Your Cart</SheetTitle>
         </SheetHeader>
 
-        {/* cart items */}
-        <div className='mt-8 space-y-4 max-h-[60vh] overflow-auto p-2'>
-            {
-                cartItems && cartItems?.length > 0 && cartItems.map((item, idx) => (
-                    <UserCartContent key={idx} cartItem={item}/>
-                ))
-            }
-        </div>
+        {/* display skelton loader or cart items */}
+        {
+          isLoading ? (
+            <CartSkeleton/>
+          ) :(
+            <>
+                {/* cart items */}
+                <div className='mt-8 space-y-4 max-h-[60vh] overflow-auto p-2'>
+                    {
+                        cartItems && cartItems?.length > 0 && cartItems.map((item, idx) => (
+                            <UserCartContent key={idx} cartItem={item}/>
+                        ))
+                    }
+                </div>
 
-        {/* total cart price */}
-        <div className='px-4 mt-8 space-y-4'>
-            <div className='flex justify-between'>
-                <span className='font-bold'>Total</span>
-                <span className='font-bold'>₹{totalCartAmount}</span>
-            </div>
-        </div>
-        
-        {/* checkout button */}
-        <div className='px-4'>
-            <Button 
-                disabled={cartItems?.length > 0 ? false : true}
-                onClick={handleNavigateToCheckout}
-                className='w-full mt-6 cursor-pointer'
-            >
-                Checkout
-            </Button>
-        </div>
+                {/* total cart price */}
+                <div className='px-4 mt-8 space-y-4'>
+                    <div className='flex justify-between'>
+                        <span className='font-bold'>Total</span>
+                        <span className='font-bold'>₹{totalCartAmount}</span>
+                    </div>
+                </div>
+                
+                {/* checkout button */}
+                <div className='px-4'>
+                    <Button 
+                        disabled={cartItems?.length > 0 ? false : true}
+                        onClick={handleNavigateToCheckout}
+                        className='w-full mt-6 cursor-pointer'
+                    >
+                        Checkout
+                    </Button>
+                </div>
+            </>
+          )
+        }
     </SheetContent>
   )
 }

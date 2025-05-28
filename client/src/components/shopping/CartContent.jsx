@@ -1,6 +1,9 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
+
+// redux store actions
+import { setProducts } from '@/store/shop/product-slice'
 
 // shadcn ui components
 import { Button } from '../ui/button'
@@ -10,6 +13,7 @@ import { Minus, Plus, Trash } from 'lucide-react'
 
 // APIs
 import { deleteFromCart, updateCartItem } from '@/services/operations/shopAPIs'
+import { fetchAllProducts } from '@/services/operations/adminAPIs'
 
 const UserCartContent = ({cartItem}) => {
 
@@ -30,7 +34,6 @@ const UserCartContent = ({cartItem}) => {
   
         if(getCartItems.length) {
           const indexOfCurrentCartItem = getCartItems.findIndex(item => item.productId === cartItem.productId);
-  
           const getCurrentProductIndex = products.findIndex(product => product._id === cartItem.productId);
           const getTotalStock = products[getCurrentProductIndex].totalStock;
 
@@ -59,7 +62,18 @@ const UserCartContent = ({cartItem}) => {
         }
         await updateCartItem(data, dispatch);
       }
-    }
+  }
+
+  // fetch all products on first render
+  useEffect(() => {
+      const fetchProducts = async () => {
+        const result = await fetchAllProducts(dispatch);
+        if(result) {
+          dispatch(setProducts(result));
+        }
+      }
+      fetchProducts();
+    }, []);
 
   return (
     <div className='flex items-center space-x-4 p-4 outline rounded-lg'>
