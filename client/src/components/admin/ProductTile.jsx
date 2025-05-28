@@ -39,15 +39,18 @@ const AdminProductTile = ({
               {/* price */}
               <div className='flex justify-between items-center mb-2'>
                 <span 
-                  className={` ${product?.salePrice > 0 ? 'line-through' : ''}
-                  text-lg font-semibold text-primary`}
+                  className={`text-lg
+                    ${product?.salePrice > 0 
+                      ? 'line-through text-muted-foreground font-semibold' 
+                      : 'text-primary font-bold'}
+                  `}
                 >
-                  {product?.price}
+                  ₹{product?.price}
                 </span>
                 <span className='text-lg font-bold'>
                   {
                     product?.salePrice > 0 &&
-                    product?.salePrice
+                    `₹${product?.salePrice}`
                   }
                 </span>
               </div>

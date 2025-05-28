@@ -16,9 +16,11 @@ import ProductImageUpload from '@/components/admin/ImageUpload'
 import AdminProductTile from '@/components/admin/ProductTile'
 import CommonForm from '@/components/common/Form'
 
+// skeleton component
+import ProductsSekeleton from '@/components/skeleton/admin/ProductsSekeleton'
+
 // APIs
 import { createProduct, deleteProduct, editProduct, fetchAllProducts } from '@/services/operations/adminAPIs'
-import { Pagination, PaginationContent, PaginationItem, PaginationNext, PaginationPrevious } from '@/components/ui/pagination'
 import PaginationWrapper from '@/components/common/PaginationWrapper'
 
 // initial form data state
@@ -46,10 +48,8 @@ const AdminProducts = () => {
   const itemsPerPage = 12;
 
 
-
-  const {products} = useSelector((state) => state.adminProducts);
+  const { isLoading, products } = useSelector((state) => state.adminProducts);
   const dispatch = useDispatch();
-
 
 
   // handles creating new product
@@ -124,6 +124,12 @@ const AdminProducts = () => {
     }
     fetchProducts();
   }, []);
+
+
+  // if loading dispaly skeleton loader
+  if(isLoading) {
+    return <ProductsSekeleton/>
+  }
 
   return (
     <Fragment> 
