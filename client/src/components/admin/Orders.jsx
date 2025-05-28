@@ -15,13 +15,14 @@ import AdminOrderDetailsView from './OrderDetails'
 
 // APIs
 import { getAllOrders, getOrderDetailsForAdmin } from '@/services/operations/adminAPIs'
+import OrdersSkeleton from '../skeleton/admin/OrdersSkeleton'
 
 
 const AdminOrders = () => {
 
     const [openDetailsDialog, setOpenDetailsDialog] = useState(false);
 
-    const { orderList, orderDetails } = useSelector(state => state.adminOrder);
+    const { isAdminOrdersLoading, orderList, orderDetails } = useSelector(state => state.adminOrder);
 
     const dispatch = useDispatch();
 
@@ -44,6 +45,10 @@ const AdminOrders = () => {
         setOpenDetailsDialog(true);
       }
     }, [orderDetails]);
+
+    if(isAdminOrdersLoading) {
+      return <OrdersSkeleton/>
+    }
 
   return (
     <Card>
