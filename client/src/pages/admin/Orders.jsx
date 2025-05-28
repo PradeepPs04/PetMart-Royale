@@ -5,7 +5,7 @@ import AdminOrders from '@/components/admin/Orders'
 
 const AdminOrdersView = () => {
   return (
-    <div>
+    <div className='container mx-auto grid grid-cols-1 gap-8'>
         <AdminOrders/>
     </div>
   )

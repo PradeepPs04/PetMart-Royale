@@ -13,7 +13,7 @@ const AdminLayout = () => {
     <div className='flex min-h-screen w-full'>
         
         {/* sidebar */}
-        <div className='w-64'>
+        <div className='w-64 hidden lg:flex'>
           <AdminSidebar 
             open={openSideBar}
             setOpen={setOpenSideBar}  
