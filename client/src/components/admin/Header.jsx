@@ -15,7 +15,7 @@ const AdminHeader = ({setOpen}) => {
   const dispatch = useDispatch();
 
   return (
-    <header className='flex items-center justify-between px-4 py-3 bg-background border-b'>
+    <header className='fixed w-full lg:w-[calc(100vw-16rem)] flex items-center justify-between px-4 py-3 bg-background border-b'>
       {/* side menubar toggle button */}
       <Button 
         onClick={() => setOpen(prev => !prev)}
