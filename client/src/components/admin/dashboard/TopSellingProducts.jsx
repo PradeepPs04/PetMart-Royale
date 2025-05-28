@@ -9,7 +9,7 @@ import { fetchTopSellingProducts } from '@/services/operations/adminAPIs';
 
 const ProductCard = ({product}) => {
     return (
-        <Card className='flex justify-center items-center min-w-[250px]'>
+      <Card className='flex justify-center items-center min-w-[250px]'>
         <div>
             {/* image */}
             <div className='relative'>
@@ -49,7 +49,7 @@ const ProductCard = ({product}) => {
               </div>
             </CardContent>
         </div>
-    </Card>
+      </Card>
     )
 }
 
@@ -72,14 +72,14 @@ const TopSellingProducts = () => {
     }, []);
 
   return (
-    <section className='mt-12 p-4 outline rounded-lg'>
+    <section className='mt-12 p-4 outline rounded-lg lg:w-full'>
         {/* heading */}
         <h2 className='mt-3 text-2xl font-bold'>
             Top Selling Products
         </h2>
 
         {/* product cards */}
-        <div className='w-[89vw] md:w-[80vw] overflow-x-auto py-4'>
+        <div className='w-[89vw] md:w-[80vw] lg:w-full overflow-x-auto py-4'>
             <div className='mt-4 flex gap-6'>
                 {
                     topSellingProds && topSellingProds.length > 0 ? (

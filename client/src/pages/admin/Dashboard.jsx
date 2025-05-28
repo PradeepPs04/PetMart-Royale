@@ -140,11 +140,7 @@ const AdminDashboard = () => {
 
   // skeleton for loader
   if(isAdminOrdersLoading) {
-    return (
-      <div>
-          <DasboardSkeleton/>
-      </div>
-    )
+    return <DasboardSkeleton/>
   }
 
   return (
@@ -171,8 +167,7 @@ const AdminDashboard = () => {
         />
       </section>
 
-      {/* think about */}
-      {/* logic for top selling products */}
+      {/* Top 10 selling products */}
       <TopSellingProducts/>
     </div>
   )
