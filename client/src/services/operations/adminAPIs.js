@@ -54,7 +54,6 @@ export async function createProduct(formData, dispatch) {
 
 // function to call fetch products api
 export async function fetchAllProducts(dispatch) {
-    const toastId = toast.loading("Loading...");
     dispatch(setLoading(true));
 
     let result = null;
@@ -72,16 +71,12 @@ export async function fetchAllProducts(dispatch) {
         dispatch(setProducts(response?.data?.data));
 
         result = response?.data?.data;
-
-        toast.success(response?.data?.message);
     } catch(err) {
         console.error("FETCH PRODUCTS API error...", err);
         toast.error(err?.response?.data?.message || err.message);
     }
 
-    toast.dismiss(toastId);
     dispatch(setLoading(false));
-
     return result;
 }
 

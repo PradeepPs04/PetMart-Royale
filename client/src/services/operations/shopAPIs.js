@@ -96,7 +96,7 @@ export async function getProductDetails(id, dispatch) {
 }
 
 // function to call add to cart api
-export async function addToCart(data, dispatch) {
+export async function addToCart(data) {
     const toastId = toast.loading("Loading...");
     let success = false;
 

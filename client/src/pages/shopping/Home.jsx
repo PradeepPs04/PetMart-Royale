@@ -35,7 +35,7 @@ const categories = [
   { id: "dogs", label: "Dogs", icon: DogIcon },
   { id: "birds", label: "Birds" , icon: BirdIcon },
   { id: "toys", label: "Toys", icon: Dice5 },
-  { id: "beds&cages", label: "Toys", icon: BedIcon },
+  { id: "beds&cages", label: "Shelter", icon: BedIcon },
 ];
 
 // data for brand cards
@@ -91,7 +91,7 @@ const ShoppingHome = () => {
     };
 
     // call api
-    const success = await addToCart(data, dispatch);
+    const success = await addToCart(data);
 
     // if item added successfully call fetch cart api (to update cart items in redux store)
     if(success) {

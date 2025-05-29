@@ -15,8 +15,6 @@ exports.addProductReview = async (req, res) => {
             review,
         } = req.body;
 
-        console.log(userName);
-
         // find the order
         const order = await Order.findOne({
             userId,

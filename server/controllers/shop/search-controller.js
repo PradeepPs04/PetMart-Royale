@@ -29,7 +29,6 @@ exports.searchProducts = async (req, res) => {
         // return success response
         return res.status(200).json({
             success: true,
-            message: "Order updated successfully",
             data: searchResults,
         });
     } catch(err) {

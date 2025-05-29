@@ -45,7 +45,6 @@ export async function addReview(data, dispatch) {
 
 // function to call fetch all review api
 export async function getReviews(productId, dispatch) {
-    const toastId = toast.loading("Loading...");
     dispatch(setIsReviewLoading(true));
 
     try {
@@ -68,5 +67,4 @@ export async function getReviews(productId, dispatch) {
     }
 
     dispatch(setIsReviewLoading(false));
-    toast.dismiss(toastId);
 }

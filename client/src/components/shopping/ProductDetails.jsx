@@ -63,7 +63,6 @@ const ProductDetailsDialog = ({open, setOpen, product, handleAddToCart, handleGe
         // fetch all reviews
         if(result) {
             await getReviews(product._id, dispatch);
-
         }
 
         // reset form
@@ -220,6 +219,7 @@ const ProductDetailsDialog = ({open, setOpen, product, handleAddToCart, handleGe
                             <Input
                                 name="reviewMsg"
                                 placeholder='Write a review'
+                                value={reviewMsg}
                                 onChange={(e) => setReviewMsg(e.target.value)}
                             />
 

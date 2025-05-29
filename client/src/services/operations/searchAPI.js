@@ -12,7 +12,6 @@ const {
 
 // function to call search product api
 export async function searchProducts(keyword, dispatch) {
-    const toastId = toast.loading("Loading...");
     dispatch(setIsSearchLoading(true));
 
     try {
@@ -28,12 +27,10 @@ export async function searchProducts(keyword, dispatch) {
         }
 
         dispatch(setSearchResults(response?.data?.data));
-        toast.success(response?.data?.message);
     } catch(err) {
         console.error("SEARCH PRODUCTS API error...", err);
         toast.error(err?.response?.data?.message || err.message);
     }
 
     dispatch(setIsSearchLoading(false));
-    toast.dismiss(toastId);
 }

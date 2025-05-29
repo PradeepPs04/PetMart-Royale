@@ -64,7 +64,7 @@ const SearchProducts = () => {
     };
 
     // call api
-    const success = await addToCart(data, dispatch);
+    const success = await addToCart(data);
 
     // if item added successfully call fetch cart api (to update cart items in redux store)
     if(success) {

@@ -149,10 +149,10 @@ exports.verifyPayment = async (req, res) => {
 exports.getAllOrdersByUser = async (req, res) => {
     try {
         // fetch data
-        const {userId} = req.params;
+        const { userId } = req.params;
 
         // find all orders in db
-        const orders = await Order.find({userId});
+        const orders = await Order.find({userId}).sort({'orderDate': -1});
 
         // return success response
         return res.status(200).json({
