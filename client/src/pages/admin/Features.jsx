@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
 
+// constants
+import { userRoles } from '@/constants';
+
 // components
 import ProductImageUpload from '@/components/admin/ImageUpload';
 
@@ -15,6 +18,7 @@ import { Button } from '@/components/ui/button';
 import { addFeatureImage, deleteFeatureImage, getFeatureImages } from '@/services/operations/featureImageAPI';
 import { Separator } from '@/components/ui/separator';
 
+
 const AdminFeatures = () => {
 
   const [imageFile, setImageFile] = useState(null);
@@ -23,11 +27,18 @@ const AdminFeatures = () => {
   const dispatch = useDispatch();
 
   const { isLoading, featureImageList } = useSelector(state => state.common);
+  const { user } = useSelector(state => state.auth);
 
   // function to upload feature image
   const hanldeImageUpload = async () => {
     if(!imageFile) {
       toast.error("Please select a file");
+      return;
+    }
+
+    // check if on admin demo account
+    if(user?.role === userRoles.DEMO_ADMIN) {
+      toast.error("Can't do this on demo account");
       return;
     }
 

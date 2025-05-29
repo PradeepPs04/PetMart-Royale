@@ -3,6 +3,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useSearchParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
+// constants
+import { userRoles } from '@/constants'
+
 // components
 import ProductFilter from '@/components/shopping/Filter'
 import ShoppingProductTile from '@/components/shopping/ProductTile'
@@ -119,7 +122,7 @@ const ShoppingProductListing = () => {
   // function to add item to cart
   const handleAddToCart = async (productId, totalStock) => {
     // if guest user
-    if(user?.role === 'guest') {
+    if(user?.role === userRoles.GUEST) {
       toast.error("Please login to continue!", {position: 'top-center'});
       return;
     }

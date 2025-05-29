@@ -1,6 +1,9 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
+// constants
+import { userRoles } from '@/constants'
+
 // shadcn ui components
 import { DialogContent } from '../ui/dialog'
 import { Label } from '../ui/label'
@@ -40,6 +43,13 @@ const AdminOrderDetailsView = ({orderDetails, setOpenDetailsDialog}) => {
     const handleUpdateStatus = (e) => {
         e.preventDefault();
 
+        // check if on admin demo account
+        if(user?.role === userRoles.DEMO_ADMIN) {
+            toast.error("Can't do this on demo account");
+            return;
+        }
+
+        // get status from form data
         const {status} = formData;
 
         // update order status

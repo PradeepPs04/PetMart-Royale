@@ -3,6 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 
+// constants
+import { userRoles } from '@/constants';
+
 // shadcn ui components
 import { SheetContent, SheetHeader, SheetTitle } from '../ui/sheet'
 import { Button } from '../ui/button'
@@ -36,7 +39,7 @@ const UserCartWrapper = ({cartItems, setOpenCartSheet}) => {
     
     // function to go to checkout page
     const handleNavigateToCheckout = () => {
-        if(user?.role === 'guest') {
+        if(user?.role === userRoles.GUEST) {
             toast.error("Please login to continue!", {position: 'top-center'});
             return;
         }

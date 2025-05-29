@@ -1,5 +1,9 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { toast } from 'react-toastify'
+
+// constants
+import { userRoles } from '@/constants'
 
 // shadcn ui components
 import { Button } from '@/components/ui/button'
@@ -47,7 +51,7 @@ const AdminProducts = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 12;
 
-
+  const { user } = useSelector(state => state.auth);
   const { isLoading, products } = useSelector((state) => state.adminProducts);
   const dispatch = useDispatch();
 
@@ -55,6 +59,12 @@ const AdminProducts = () => {
   // handles creating new product
   const onSubmit = (e) => {
     e.preventDefault();
+
+    // check if on admin demo account
+    if(user?.role === userRoles.DEMO_ADMIN) {
+      toast.error("Can't do this on demo account");
+      return;
+    }
 
     // create form data
     const data = {
@@ -96,9 +106,17 @@ const AdminProducts = () => {
 
   // function to delete a product
   const handleDelete = (productId) => {
+    // check if on admin demo account
+    if(user?.role === userRoles.DEMO_ADMIN) {
+      toast.error("Can't do this on demo account");
+      return;
+    }
+
+    // call api to delete product
     deleteProduct(productId)
     .then((response) => {
       if(response) {
+        // call api to fetch all products
         fetchAllProducts(dispatch);
       }
     })

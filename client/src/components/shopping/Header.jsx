@@ -1,16 +1,38 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-dom'
+import {
+  Link, 
+  useLocation, 
+  useNavigate, 
+  useSearchParams
+} from 'react-router-dom'
+
+// constants
+import { userRoles } from '@/constants'
 
 // shadcn ui components
 import { Sheet, SheetContent, SheetTrigger } from '../ui/sheet'
 import { Button } from '../ui/button'
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '../ui/dropdown-menu'
+import { 
+  DropdownMenu, 
+  DropdownMenuContent, 
+  DropdownMenuItem, 
+  DropdownMenuLabel, 
+  DropdownMenuSeparator, 
+  DropdownMenuTrigger 
+} from '../ui/dropdown-menu'
 import { Avatar, AvatarFallback } from '../ui/avatar'
 import { Label } from '../ui/label'
 
 // icons
-import { LogInIcon, LogOut, Menu, ShoppingCart, UserCog, UserIcon } from 'lucide-react'
+import { 
+  LogInIcon, 
+  LogOut, 
+  Menu, 
+  ShoppingCart, 
+  UserCog, 
+  UserIcon 
+} from 'lucide-react'
 import LogoIcon from '../../assets/logo.png'
 
 // config data
@@ -137,7 +159,7 @@ const HeaderRightContent = () => {
           <DropdownMenuLabel>Logged in as {user?.userName}</DropdownMenuLabel>
           <DropdownMenuSeparator/>
             {
-              user?.role === 'guest' ? (
+              user?.role === userRoles.GUEST ? (
                 <>
                     {/* Login */}
                     <DropdownMenuItem 

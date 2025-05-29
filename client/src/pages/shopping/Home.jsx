@@ -3,6 +3,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
+// constants
+import { userRoles } from '@/constants'
+
 // images
 import activeLogo from '../../assets/brandLogos/active.png'
 import himalayaLogo from '../../assets/brandLogos/himalaya.png'
@@ -80,7 +83,7 @@ const ShoppingHome = () => {
   // function to add item to cart
   const handleAddToCart = async (productId) => {
     // if guest user
-    if(user?.role === 'guest') {
+    if(user?.role === userRoles.GUEST) {
       toast.error("Please login to continue!", {position: 'top-center'});
       return;
     }

@@ -21,5 +21,7 @@ export default defineConfig({
     "process.env.RAZORPAY_KEY": JSON.stringify(process.env.VITE_REACT_APP_RAZORPAY_KEY),
     "process.env.GUEST_EMAIL": JSON.stringify(process.env.VITE_REACT_APP_GUEST_EMAIL),
     "process.env.GUEST_PASSWORD": JSON.stringify(process.env.VITE_REACT_APP_GUEST_PASSWORD),
+    "process.env.DEMO_ADMIN_EMAIL": JSON.stringify(process.env.VITE_REACT_APP_DEMO_ADMIN_EMAIL),
+    "process.env.DEMO_ADMIN_PASSWORD": JSON.stringify(process.env.VITE_REACT_APP_DEMO_ADMIN_PASSWORD),
   }
 })

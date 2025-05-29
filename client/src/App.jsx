@@ -37,7 +37,6 @@ import { checkAuth } from './services/operations/authAPI';
 // Loader skeleton
 import HeaderSkeleton from './components/skeleton/shopping/HeaderSkeleton';
 
-
 const App = () => {
 
   const {isAuthenticated, user, isLoading} = useSelector(state => state.auth);

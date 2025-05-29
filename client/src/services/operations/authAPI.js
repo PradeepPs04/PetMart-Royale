@@ -45,7 +45,7 @@ export async function signup(formData) {
 }
 
 // function to call login api
-export async function login(formData, dispatch, isGuest=true) {
+export async function login(formData, dispatch, isGuest=false) {
     const toastId = toast.loading("Loading...");
     dispatch(setLoading(true));
     

@@ -9,6 +9,7 @@ import CommonForm from '@/components/common/Form';
 import { login } from '@/services/operations/authAPI';
 import { Button } from '@/components/ui/button';
 import { toast } from 'react-toastify';
+import { Badge } from '@/components/ui/badge';
 
 // initial state for formData state variable
 const initialState = {
@@ -61,6 +62,21 @@ const Login = () => {
     await login(guestLoginData, dispatch, isGuest); 
   }
 
+  // function to login to admin demo account
+  const handleAdminDemoLogin = async () => {
+    const emailId = process.env.DEMO_ADMIN_EMAIL;
+    const password = process.env.DEMO_ADMIN_PASSWORD;
+
+    // create form data
+    const demoAdminLoginData = {
+      email: emailId,
+      password: password,
+    }
+
+    // call login api
+    await login(demoAdminLoginData, dispatch); 
+  }
+
   return (
     <div className='mx-auto w-full max-w-md space-y-6'>
         <div className='text-center'>
@@ -87,6 +103,16 @@ const Login = () => {
             Don't have an account {" "}
             <Link to='/auth/signup' className='font-medium text-primary hover:underline'>Register</Link>
         </p>
+
+        {/* demo admin login button */}
+        <div className='mt-6 flex justify-center'>
+          <Button 
+            onClick={handleAdminDemoLogin}
+            className='bg-yellow-300 hover:bg-yellow-400 text-[#1F2B37] py-1 px-6 cursor-pointer'
+          >
+              Admin Demo
+          </Button>
+        </div>
     </div>
   )
 }
