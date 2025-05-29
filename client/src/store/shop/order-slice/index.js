@@ -22,9 +22,14 @@ const shopOrderSlice = createSlice({
         },
         setOrderDetails: (state, action) => {
             state.orderDetails = action.payload;
-        }
+        },
+        resetOrders: (state) => {
+            state.orderId = null;
+            state.orderList = [];
+            state.orderDetails = null;
+        },
     }
 });
 
-export const { setOrderLoading, setOrderId, setOrderList, setOrderDetails } = shopOrderSlice.actions;
+export const { setOrderLoading, setOrderId, setOrderList, setOrderDetails, resetOrders } = shopOrderSlice.actions;
 export default shopOrderSlice.reducer;

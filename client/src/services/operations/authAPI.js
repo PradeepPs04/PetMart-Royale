@@ -4,6 +4,8 @@ import { authEndpoints } from "../apis";
 
 // redux store slices
 import { setIsAuthenticated, setLoading, setUser } from "@/store/auth-slice";
+import { resetCart } from "@/store/shop/cart-slice";
+import { resetOrders } from "@/store/shop/order-slice";
 
 
 const {
@@ -117,9 +119,12 @@ export async function logout(dispatch, isGuest=false) {
         if(!response?.data?.success) {
             throw new Error("Can't logout! Try again later");
         }
-
+        
+        // reset states
         dispatch(setUser(null));
         dispatch(setIsAuthenticated(false));
+        dispatch(resetCart());
+        dispatch(resetOrders());
 
         // don't display toast for guest user
         if(!isGuest) {   

@@ -15,7 +15,6 @@ const {
 
 // function to call add address API
 export async function addAddress(data, dispatch) {
-    const toastId = toast.loading("Loading...");
     let success = false;
     dispatch(setAddressLoading(true));
 
@@ -40,7 +39,6 @@ export async function addAddress(data, dispatch) {
     }
 
     dispatch(setAddressLoading(false));
-    toast.dismiss(toastId);
     return success;
 }
 
@@ -72,7 +70,6 @@ export async function fetchAllAddresses(userId, dispatch) {
 
 // function to call edit address API
 export async function editAddress(userId, addressId, formData, dispatch) {
-    const toastId = toast.loading("Loading...");
     dispatch(setAddressLoading(true));
     let success = false;
 
@@ -97,14 +94,12 @@ export async function editAddress(userId, addressId, formData, dispatch) {
     }
 
     dispatch(setAddressLoading(true));
-    toast.dismiss(toastId);
 
     return success;
 }
 
-// functiont to call delete address API
+// function to call delete address API
 export async function deleteAddress(userId, addressId, dispatch) {
-    const toastId = toast.loading("Loading...");
     dispatch(setAddressLoading(true));
     
     let success = false;
@@ -129,7 +124,6 @@ export async function deleteAddress(userId, addressId, dispatch) {
     }
 
     dispatch(setAddressLoading(false));
-    toast.dismiss(toastId);
 
     return success;
 }

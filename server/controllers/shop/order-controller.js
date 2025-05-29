@@ -154,13 +154,6 @@ exports.getAllOrdersByUser = async (req, res) => {
         // find all orders in db
         const orders = await Order.find({userId});
 
-        if(orders.length === 0) {
-            return res.status(404).json({
-                success: false,
-                message: "No orders found",
-            });
-        }
-
         // return success response
         return res.status(200).json({
             success: true,

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useSearchParams } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 // components
 import ProductFilter from '@/components/shopping/Filter'
@@ -8,10 +9,17 @@ import ShoppingProductTile from '@/components/shopping/ProductTile'
 import ProductDetailsDialog from '@/components/shopping/ProductDetails'
 import PaginationWrapper from '@/components/common/PaginationWrapper'
 
+// skeleton components
+import ProductListlingsSkeleton from '@/components/skeleton/shopping/ProductListlingsSkeleton'
+
 // shadcn ui components
 import { DropdownMenu, DropdownMenuTrigger } from '@radix-ui/react-dropdown-menu'
 import { Button } from '@/components/ui/button'
-import { DropdownMenuContent, DropdownMenuRadioGroup, DropdownMenuRadioItem } from '@/components/ui/dropdown-menu'
+import { 
+  DropdownMenuContent, 
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem
+} from '@/components/ui/dropdown-menu'
 
 // icons
 import { ArrowUpDownIcon } from 'lucide-react'
@@ -20,9 +28,13 @@ import { ArrowUpDownIcon } from 'lucide-react'
 import { sortOptions } from '@/config/userShop'
 
 // APIs
-import { addToCart, fetchCartItems, fetchFilteredProducts, getProductDetails } from '@/services/operations/shopAPIs'
-import { toast } from 'react-toastify'
-import ProductListlingsSkeleton from '@/components/skeleton/shopping/ProductListlingsSkeleton'
+import { 
+  addToCart, 
+  fetchCartItems, 
+  fetchFilteredProducts,
+   getProductDetails 
+} from '@/services/operations/shopAPIs'
+
 
 // create query params using selected options on filter
 const createSearchParamsFromFilter = (filterParams) => {
@@ -171,12 +183,6 @@ const ShoppingProductListing = () => {
     }
   }, [productDetails]);
 
-
-  // if loading display skeleton loader
-  if(isLoading) {
-    return <ProductListlingsSkeleton/>
-  }
-
   return (
     <div className='grid grid-cols-1 md:grid-cols-[300px_1fr] gap-6 p-4 md:p-6'>
 
@@ -186,67 +192,74 @@ const ShoppingProductListing = () => {
           handleFilter={handleFilter}
         />
 
-        {/* products cards */}
-        <div className='bg-background w-full rounded-lg shadow-sm'>
-          <div className='p-4 border-b flex items-center justify-between'>
-            <h2 className='text-lg font-bold'>All Products</h2>
+        {
+          isLoading ? (
+            <ProductListlingsSkeleton/>
+          ) : (
+          <div className='bg-background w-full rounded-lg shadow-sm'>
+            <div className='p-4 border-b flex items-center justify-between'>
+              <h2 className='text-lg font-bold'>All Products</h2>
 
-            {/* product count & sort by filter*/}
-            <div className='flex items-center gap-3'>
-              {/* no. of products */}
-              <span className='text-muted-foreground'>
-                {products?.length || 0} Products
-              </span>
+              {/* product count & sort by filter*/}
+              <div className='flex items-center gap-3'>
+                {/* no. of products */}
+                <span className='text-muted-foreground'>
+                  {products?.length || 0} Products
+                </span>
 
-              {/* sort by dropdown */}
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant='outline' size='sm' className='flex items-center gap-1 cursor-pointer'>
-                    <ArrowUpDownIcon className='w-4 h-4'/>
-                    <span>Sort by</span>
-                  </Button>
-                </DropdownMenuTrigger>
+                {/* sort by dropdown */}
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant='outline' size='sm' className='flex items-center gap-1 cursor-pointer'>
+                      <ArrowUpDownIcon className='w-4 h-4'/>
+                      <span>Sort by</span>
+                    </Button>
+                  </DropdownMenuTrigger>
 
-                <DropdownMenuContent align='end' className='w-[200px]'>
-                  <DropdownMenuRadioGroup 
-                    value={sort} 
-                    onValueChange={handleSort}
-                  >
-                    {
-                      sortOptions.map((sortItem) => (
-                        <DropdownMenuRadioItem
-                          key={sortItem.id}
-                          value={sortItem.id}
-                          className='cursor-pointer'
-                        >
-                          {sortItem.label}
-                        </DropdownMenuRadioItem>
-                      ))
-                    }
-                  </DropdownMenuRadioGroup>
-                </DropdownMenuContent>
-              </DropdownMenu>
+                  <DropdownMenuContent align='end' className='w-[200px]'>
+                    <DropdownMenuRadioGroup 
+                      value={sort} 
+                      onValueChange={handleSort}
+                    >
+                      {
+                        sortOptions.map((sortItem) => (
+                          <DropdownMenuRadioItem
+                            key={sortItem.id}
+                            value={sortItem.id}
+                            className='cursor-pointer'
+                          >
+                            {sortItem.label}
+                          </DropdownMenuRadioItem>
+                        ))
+                      }
+                    </DropdownMenuRadioGroup>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
+            </div>
+            
+            {/* product cards */}
+            <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4'>
+                {
+                  products && products?.length > 0 && (
+                    [...products]
+                      .slice((currentPage-1)*itemsPerPage, (currentPage)*itemsPerPage)
+                      .map((item, idx) => (
+                        <ShoppingProductTile 
+                          key={idx} 
+                          product={item}
+                          handleGetProductDetails={handleGetProductDetails}
+                          handleAddToCart={handleAddToCart}
+                        />
+                    ))
+                  )
+                }
             </div>
           </div>
-          
-          {/* product cards */}
-          <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4'>
-              {
-                products && products?.length > 0 && (
-                  [...products]
-                    .slice((currentPage-1)*itemsPerPage, (currentPage)*itemsPerPage)
-                    .map((item, idx) => (
-                      <ShoppingProductTile 
-                        key={idx} 
-                        product={item}
-                        handleGetProductDetails={handleGetProductDetails}
-                        handleAddToCart={handleAddToCart}
-                      />
-                  ))
-                )
-              }
-          </div>
-        </div>
+            
+          )
+        }
+        {/* products cards */}
         
         {/* product details dialog */}
         <ProductDetailsDialog

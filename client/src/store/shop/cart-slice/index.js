@@ -17,10 +17,14 @@ const shopCartSlice = createSlice({
             state.cartItems = action.payload;
         },
         setCartLoading: (state, action) => {
-            state.isLoading = action.payload
+            state.isLoading = action.payload;
         },
+        resetCart: (state) => {
+            state.cartId = '';
+            state.cartItems = [];
+        }
     }
 });
 
-export const { setCartId, setCartLoading, setCartItems } = shopCartSlice.actions;
+export const { setCartId, setCartLoading, setCartItems, resetCart } = shopCartSlice.actions;
 export default shopCartSlice.reducer;

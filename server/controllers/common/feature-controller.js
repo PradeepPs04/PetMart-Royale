@@ -34,7 +34,7 @@ exports.addFeatureImage = async (req, res) => {
 exports.getFeatureImage = async (req, res) => {
     try {
         // fetch all featuer
-        const allFeatures = await Feature.find({});
+        const allFeatures = await Feature.find({}).sort({'createdAt': -1});
         
         // return success response
         return res.status(200).json({
