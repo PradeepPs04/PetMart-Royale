@@ -5,6 +5,9 @@ import { orderEndpoints } from "../apis";
 import { setOrderDetails, setOrderId, setOrderList, setOrderLoading } from "@/store/shop/order-slice";
 import { setCartId, setCartItems } from "@/store/shop/cart-slice";
 
+// logo
+import logo from '../../assets/logo.png'
+
 const {
     CREATE_ORDER_API,
     VERIFY_PAYMENT_API,
@@ -71,7 +74,7 @@ export async function createOrder(orderData, user, dispatch, navigate) {
             order_id: paymentResponse?.id,
             name: "PetMart Royale",
             description: "Thank you for purchasing with us",
-            image: 'logo',
+            image: logo,
             prefill: {
                 name: user?.userName,
                 email: user?.email,

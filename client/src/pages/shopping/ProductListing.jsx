@@ -275,12 +275,14 @@ const ShoppingProductListing = () => {
         />
 
         {/* Pagination */}
-        <PaginationWrapper
-          totalItems={products?.length}
-          itemsPerPage={itemsPerPage}
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-        />
+        <div className='mx-auto w-[96vw]'>
+          <PaginationWrapper
+            totalItems={products?.length}
+            itemsPerPage={itemsPerPage}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+          />
+        </div>
     </div>
   )
 }

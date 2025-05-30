@@ -76,7 +76,7 @@ const SalesPieChart = ({heading, data, totalRevenue, totalOrders}) => {
                             y={(viewBox.cy || 0) + 24}
                             className="fill-muted-foreground"
                           >
-                            Total orders
+                            Total items
                           </tspan>
                         </text>
                       )
