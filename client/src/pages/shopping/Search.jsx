@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useSearchParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
+import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 
 // redux store actions
 import { setSearchResults } from '@/store/shop/search-slice';
 
 // icons
-import { SearchIcon } from 'lucide-react';
+import { MicIcon, MicOffIcon, SearchIcon } from 'lucide-react';
 
 // components
 import ShoppingProductTile from '@/components/shopping/ProductTile';
@@ -29,6 +30,8 @@ const SearchProducts = () => {
 
     const [keyword, setKeyword] = useState('');
     const [openProdDetailsDialog, setOpenProdDetailsDialog] = useState(false);
+    const [searchType, setSearchType] = useState('input');
+
 
     // for pagination
     const [currentPage, setCurrentPage] = useState(1);
@@ -41,6 +44,14 @@ const SearchProducts = () => {
     const { productDetails } = useSelector(state => state.shopProducts);
 
     const dispatch = useDispatch();
+
+    const {
+        transcript,
+        listening,
+        browserSupportsSpeechRecognition
+    } = useSpeechRecognition();
+
+    const inputRef = useRef(null);
 
     // function to add item to cart
     const handleAddToCart = async (productId, totalStock) => {
@@ -77,18 +88,48 @@ const SearchProducts = () => {
     await getProductDetails(productId, dispatch);
     }
 
-    // function to search products
-    const handleSearch = () => {
-        if(keyword && keyword.trim() !== '' && keyword.trim().length >= 3) {
-            setTimeout(async () => {
-                setSearchParams(new URLSearchParams(`?keyword=${keyword}`));
-                await searchProducts(keyword, dispatch);
-            });
+
+    // maintain previous searched value when clicked on input box
+    const handleInputClick = () => {
+        if(searchType === 'voice') {
+            inputRef.current.value = transcript;
+            setKeyword(transcript);
         } else {
-                setSearchParams(new URLSearchParams(`?keyword=${keyword}`));
+            setKeyword(keyword);
+        }
+        
+        setSearchType('input');
+    }
+
+    // function to take input from user's microphone
+    const handleVoiceInput = () => {
+        if(!browserSupportsSpeechRecognition) {
+            toast.error("Browser doesn't support speech recognition");
+            return;
+        }
+
+        setSearchType('voice');
+        SpeechRecognition.startListening();
+    }
+
+    // call search product API on input change
+    useEffect(() => {
+        let timeOutId = null;
+        // get input value
+        const input = searchType === 'voice' ? transcript : keyword;
+
+        if(input && input.trim() !== "" && input.trim().length >= 3) {
+            timeOutId = setTimeout(async () => {
+                    setSearchParams(new URLSearchParams(`?keyword=${input}`));
+                    await searchProducts(input, dispatch);
+            }, 1000);
+        } else {
+            setSearchParams(new URLSearchParams(`?keyword=${input}`));
             dispatch(setSearchResults([]));
         }
-    }
+
+        return () => clearTimeout(timeOutId);
+    }, [keyword, transcript]);
 
     // fetch products details
     useEffect(() => {
@@ -98,28 +139,40 @@ const SearchProducts = () => {
     }, [productDetails]);
 
   return (
-    <div className='container mx-auto md:px-6 px-4 py-8'>
+    <div className='relative min-h-[80vh] container mx-auto md:px-6 px-4 py-8'>
         {/* search box */}
-        <div className='flex flex-col sm:flex-row justify-center gap-4 mb-8'>
-            <div className='relative w-full flex items-center'>
-                <SearchIcon className='absolute left-2 text-muted-foreground opacity-50'/>
+        <div className='flex flex-col sm:flex-row items-center justify-center gap-4 mb-8'>
+            <div className='w-full flex items-center gap-4'>
+                <SearchIcon className='absolute left-6 md:left-8 text-muted-foreground opacity-50'/>
                 <Input
-                    value={keyword}
+                    value={searchType === 'voice' ? transcript : keyword}
+                    ref={inputRef}
                     name="keyword"
                     onChange={(e) => setKeyword(e.target.value)}
+                    onClick={handleInputClick}
                     placeholder="Search products..."
                     className='px-10 py-6'
                 />
-            </div>
 
-            {/* serach button */}
-            <div className='w-full sm:w-fit'>
-                <Button 
-                    onClick={handleSearch}
-                    className='cursor-pointer py-6 px-10 w-full'
-                >
-                    Search
-                </Button>
+                {/* voice search button */}
+                <div>
+                    <Button
+                        onClick={handleVoiceInput}
+                        variant='ghost'
+                        className={` 
+                            
+                            cursor-pointer bg-black text-white hover:bg-black hover:text-white
+                        `}
+                    >
+                        {
+                            listening ? (
+                                <MicIcon className='transition-all duration-300'/>
+                            ): (
+                                <MicOffIcon className='transition-all duration-300'/>
+                            )
+                        }
+                    </Button>
+                </div>
             </div>
         </div>
 

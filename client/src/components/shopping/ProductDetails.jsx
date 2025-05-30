@@ -86,7 +86,7 @@ const ProductDetailsDialog = ({open, setOpen, product, handleAddToCart, handleGe
     }, [product]);
 
   return (
-    <div>
+    <>
         <Dialog
             open={open}
             onOpenChange={handleDialogClose}
@@ -263,7 +263,7 @@ const ProductDetailsDialog = ({open, setOpen, product, handleAddToCart, handleGe
                 
             </DialogContent>
         </Dialog>
-    </div>
+    </>
   )
 }
 

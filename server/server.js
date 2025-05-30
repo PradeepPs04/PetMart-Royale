@@ -35,9 +35,9 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(
     cors({
-        // 'http://localhost:5173',
         // change origin for local development
-        origin: 'https://pet-mart-royale.vercel.app', 
+        // origin: 'http://localhost:5173',
+        origin: 'https://pet-mart-royale.vercel.app',
         methods: ['GET', 'POST', 'DELETE', 'PUT'],
         allowedHeaders: [
             'Content-Type',

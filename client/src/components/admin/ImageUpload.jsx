@@ -80,6 +80,7 @@ const ProductImageUpload = ({
                             imagePreview && (<img src={imagePreview} className={`max-w-[90%] ${isCustomStyling ? 'max-h-[500px]' : 'h-56'}`}/>)
                         }
 
+                        {/* remove button */}
                         <Button 
                             variant='ghost'
                             size='icon'

@@ -195,6 +195,7 @@ const ShoppingProductListing = () => {
           handleFilter={handleFilter}
         />
 
+        {/* products cards */}
         {
           isLoading ? (
             <ProductListlingsSkeleton/>
@@ -262,7 +263,6 @@ const ShoppingProductListing = () => {
             
           )
         }
-        {/* products cards */}
         
         {/* product details dialog */}
         <ProductDetailsDialog
