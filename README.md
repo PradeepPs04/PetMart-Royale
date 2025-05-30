@@ -30,20 +30,13 @@ Before running this project, make sure you have the following installed:
 - MongoDB (local or Atlas)
 - Git
 
-## 🔧 Environment Variables
-
-### Server (.env)
-Create a `.env` file in the server directory (sample env file is provided)
-
-### Client (.env)
-Create a `.env` file in the client directory (sample env file is provided)
 
 ## 🚀 Getting Started
 
 1. Clone the repository:
 ```bash
-git clone <repository-url>
-cd ECommerce
+git clone https://github.com/PradeepPs04/PetMart-Royale.git
+cd PetMart-Royale
 ```
 
 2. Install dependencies:
@@ -60,7 +53,13 @@ cd client
 npm install
 ```
 
-3. Start the development servers:
+3. Environment Variables
+
+Create a `.env` file in the server directory (sample env file is provided)
+Create a `.env` file in the client directory (sample env file is provided)
+
+
+4. Start the development servers:
 
 For the server (in the server directory):
 ```bash
