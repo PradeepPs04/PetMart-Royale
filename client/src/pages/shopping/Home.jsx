@@ -7,12 +7,12 @@ import { toast } from 'react-toastify'
 import { userRoles } from '@/constants'
 
 // images
-import activeLogo from '../../assets/brandLogos/Active.png'
-import himalayaLogo from '../../assets/brandLogos/Himalaya.png'
-import pedigreeLogo from '../../assets/brandLogos/Pedigree.png'
-import purepetLogo from '../../assets/brandLogos/Purepet.png'
-import royalCaninLogo from '../../assets/brandLogos/Royalcanin.png'
-import whiskasLogo from '../../assets/brandLogos/Whiskas.jpg'
+import activeLogo from '../../assets/brandLogos/active.png'
+import himalayaLogo from '../../assets/brandLogos/himalaya.png'
+import pedigreeLogo from '../../assets/brandLogos/pedigree.png'
+import purepetLogo from '../../assets/brandLogos/purepet.png'
+import royalCaninLogo from '../../assets/brandLogos/royalcanin.png'
+import whiskasLogo from '../../assets/brandLogos/whiskas.jpg'
 
 // APIs
 import { addToCart, fetchCartItems, fetchFilteredProducts, getProductDetails } from '@/services/operations/shopAPIs'
