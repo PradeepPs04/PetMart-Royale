@@ -20,7 +20,7 @@ export async function searchProducts(keyword, dispatch) {
             `${SEARCH_PRODUCT_API}/${keyword}`,
         );
 
-        console.log("SEARCH PRODUCTS API response...", response);
+        // console.log("SEARCH PRODUCTS API response...", response);
 
         if(!response?.data?.success) {
             throw new Error("Can't search for products! Try again later");

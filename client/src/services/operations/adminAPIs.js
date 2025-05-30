@@ -33,7 +33,7 @@ export async function createProduct(formData, dispatch) {
             {'Content-Type': 'multipart/form-data'},
         );
 
-        console.log("CREATE PRODUCT API response...", response);
+        // console.log("CREATE PRODUCT API response...", response);
 
         if(!response?.data?.success) {
             throw new Error("Can't create product right now try again later");
@@ -61,7 +61,7 @@ export async function fetchAllProducts(dispatch) {
     try {
         const response = await apiConnector('GET', FETCH_ALL_PRODUCTS_API);
 
-        console.log("FETCH PRODUCTS API response...", response);
+        // console.log("FETCH PRODUCTS API response...", response);
 
         if(!response?.data?.success) {
             throw new Error("Can't fetch products right now try again later");
@@ -93,7 +93,7 @@ export async function editProduct(id, formData) {
             {'Content-Type': 'multipart/form-data'},
         );
 
-        console.log("EDIT PRODUCT API response...", response);
+        // console.log("EDIT PRODUCT API response...", response);
 
         if(!response?.data?.success) {
             throw new Error("Can't edit product right now try again later");
@@ -124,7 +124,7 @@ export async function deleteProduct(id) {
             {'Content-Type': 'multipart/form-data'},
         );
 
-        console.log("DELETE PRODUCT API response...", response);
+        // console.log("DELETE PRODUCT API response...", response);
 
         if(!response?.data?.success) {
             throw new Error("Can't delete product right now try again later");
@@ -150,7 +150,7 @@ export async function getAllOrders(dispatch) {
     try {
         const response = await apiConnector("GET", GET_ALL_ORDERS_API);
 
-        console.log("GET ALL ORDERS API response...", response);
+        // console.log("GET ALL ORDERS API response...", response);
 
         if(!response?.data?.success) {
             throw new Error("Can't fetch orders right now! Try again later");
@@ -174,7 +174,7 @@ export async function getOrderDetailsForAdmin(id, dispatch) {
     try {
         const response = await apiConnector("GET", `${GET_ORDER_DETAILS_FOR_ADMIN_API}/${id}`);
 
-        console.log("GET ORDER DETAILS FOR ADMIN API response...", response);
+        // console.log("GET ORDER DETAILS FOR ADMIN API response...", response);
 
         if(!response?.data?.success) {
             throw new Error("Can't fetch order details right now! Try again later");
@@ -202,7 +202,7 @@ export async function updateOrderStatus(orderId, orderStatus) {
             {orderStatus},
         );
 
-        console.log("UPDATE ORDER STATUS API response...", response);
+        // console.log("UPDATE ORDER STATUS API response...", response);
 
         if(!response?.data?.success) {
             throw new Error("Can't update order status! Try again later");
@@ -231,7 +231,7 @@ export async function fetchTopSellingProducts(dispatch) {
             FETCH_TOP_SELLING_PRODUCTS_API,
         );
 
-        console.log("FETCH TOP SELLING PRODUCTS API response...", response);
+        // console.log("FETCH TOP SELLING PRODUCTS API response...", response);
 
         if(!response?.data?.success) {
             throw new Error("Can't fetch top selling products! Try again later");

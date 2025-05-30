@@ -25,7 +25,7 @@ export async function addAddress(data, dispatch) {
             data,
         );
 
-        console.log("ADD ADDRESS API response", response);
+        // console.log("ADD ADDRESS API response", response);
 
         if(!response?.data?.success) {
             throw new Error("Can't add address right now! Try again later");
@@ -52,7 +52,7 @@ export async function fetchAllAddresses(userId, dispatch) {
             `${FETCH_ALL_ADDRESSES_API}/${userId}`,
         );
 
-        console.log("FETCH ALL ADDRESSES API response...", response);
+        // console.log("FETCH ALL ADDRESSES API response...", response);
 
         if(!response?.data?.success) {
             throw new Error("Can't fetch addresses now! Try again later");
@@ -80,7 +80,7 @@ export async function editAddress(userId, addressId, formData, dispatch) {
             formData,
         );
 
-        console.log("EDIT ADDRESS API response...", response);
+        // console.log("EDIT ADDRESS API response...", response);
 
         if(!response?.data?.success) {
             throw new Error("Can't edit address right now! Try again later");
@@ -110,7 +110,7 @@ export async function deleteAddress(userId, addressId, dispatch) {
             `${DELETE_ADDRESS_API}/${userId}/${addressId}`,
         );
 
-        console.log("DELETE ADDRESS API response...", response);
+        // console.log("DELETE ADDRESS API response...", response);
 
         if(!response?.data?.success) {
             throw new Error("Can't delete address right now! Try again later");

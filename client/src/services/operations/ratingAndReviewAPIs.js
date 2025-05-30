@@ -24,7 +24,7 @@ export async function addReview(data, dispatch) {
             data,
         );
 
-        console.log("ADD REVIEW API response...", response);
+        // console.log("ADD REVIEW API response...", response);
 
         if(!response?.data?.success) {
             throw new Error("Can't add review! Try again later");
@@ -53,7 +53,7 @@ export async function getReviews(productId, dispatch) {
             `${GET_REVIEWS_API}/${productId}`,
         );
 
-        console.log("GET REVIEWS API response...", response);
+        // console.log("GET REVIEWS API response...", response);
 
         if(!response?.data?.success) {
             throw new Error("Can't fetch reviews! Try again later");

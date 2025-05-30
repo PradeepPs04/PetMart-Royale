@@ -89,8 +89,6 @@ const ShoppingCheckout = () => {
     await createOrder(orderData, user, dispatch, navigate);
   }
 
-  console.log(cartItems);
-
   return (
     <div className='flex flex-col'>
         {/* banner image */}

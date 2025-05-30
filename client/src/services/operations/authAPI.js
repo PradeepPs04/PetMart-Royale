@@ -27,7 +27,7 @@ export async function signup(formData) {
             formData,
         );
 
-        console.log("SIGNUP API response...", response);
+        // console.log("SIGNUP API response...", response);
 
         if(!response?.data?.success) {
             throw new Error("Can't sign up right now try again later");
@@ -56,7 +56,7 @@ export async function login(formData, dispatch, isGuest=false) {
             formData,
         );
 
-        console.log("LOGIN API response...", response);
+        // console.log("LOGIN API response...", response);
 
         if(!response?.data?.success) {
             throw new Error("Can't log in right now try again later");
@@ -93,7 +93,7 @@ export async function checkAuth(dispatch) {
             }
         );
 
-        console.log("CHECK AUTH API response...", response);
+        // console.log("CHECK AUTH API response...", response);
 
         if(!response?.data?.success) {
             throw new Error("Can't authenticate user try again later");
@@ -114,7 +114,7 @@ export async function logout(dispatch, isGuest=false) {
     try {
         const response = await apiConnector('POST', LOGOUT_API);
 
-        console.log("LOGOUT API response...", response);
+        // console.log("LOGOUT API response...", response);
 
         if(!response?.data?.success) {
             throw new Error("Can't logout! Try again later");

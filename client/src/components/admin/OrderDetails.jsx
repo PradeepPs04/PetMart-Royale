@@ -55,7 +55,7 @@ const AdminOrderDetailsView = ({orderDetails, setOpenDetailsDialog}) => {
         // update order status
         updateOrderStatus(orderDetails?._id, status).then(result => {
             if(result) {
-                console.log("result is: ", result);
+                // console.log("result is: ", result);
                 // set order details in store
                 dispatch(setOrderDetails(result));
                 // fetch all orders

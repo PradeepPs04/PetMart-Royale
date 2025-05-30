@@ -23,7 +23,7 @@ export async function addFeatureImage(image) {
             {'Content-Type': 'multipart/form-data'},
         );
 
-        console.log("ADD FEATURE IMAGE API response...", response);
+        // console.log("ADD FEATURE IMAGE API response...", response);
 
         if(!response?.data?.success) {
             throw new Error("Can't add feature image! Try again later");
@@ -51,7 +51,7 @@ export async function getFeatureImages(dispatch) {
             GET_FEATURE_IMAGES_API,
         );
 
-        console.log("GET FEATURE IMAGES API response...", response);
+        // console.log("GET FEATURE IMAGES API response...", response);
 
         if(!response?.data?.success) {
             throw new Error("Can't fetch feature images! Try again later");
@@ -79,7 +79,7 @@ export async function deleteFeatureImage(featureId) {
             `${DELETE_FEATURE_IMAGE_API}/${featureId}`,
         );
 
-        console.log("DELETE FEATURE IMAGE API response...", response);
+        // console.log("DELETE FEATURE IMAGE API response...", response);
 
         if(!response?.data?.success) {
             throw new Error("Can't delte feature image! Try again later");

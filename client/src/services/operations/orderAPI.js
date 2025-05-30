@@ -53,7 +53,7 @@ export async function createOrder(orderData, user, dispatch, navigate) {
             orderData,
         );
 
-        console.log("CREATE ORDER API response...", response);
+        // console.log("CREATE ORDER API response...", response);
 
         if(!response?.data?.success) {
             throw new Error("Can't created order! Try again later");
@@ -94,7 +94,7 @@ export async function createOrder(orderData, user, dispatch, navigate) {
 
         paymentObject.on('payment.failed', function(response) {
             toast.error("Oops, payment failed");
-            console.log(response.error);
+            // console.log(response.error);
         });
     } catch(err) {
         console.error("CREATE ORDER API error...", err);
@@ -149,7 +149,7 @@ export async function getUserOrders(userId, dispatch) {
             `${GET_USER_ORDERS_API}/${userId}`,
         );
 
-        console.log("GET USER ORDERS API response...", response);
+        // console.log("GET USER ORDERS API response...", response);
 
         if(!response?.data?.success) {
             throw new Error("Can't fetch orders! Try again later");
@@ -176,7 +176,7 @@ export async function getOrderDetails(orderId, dispatch) {
             `${GET_ORDER_DETAILS_API}/${orderId}`
         );
 
-        console.log("GET ORDER DETAILS API response...", response);
+        // console.log("GET ORDER DETAILS API response...", response);
 
         if(!response?.data?.success) {
             throw new Error("Can't fetch orders details! Try again later");

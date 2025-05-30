@@ -48,7 +48,7 @@ export async function fetchFilteredProducts(filterParams, sortParams, dispatch) 
 
         const response = await apiConnector('GET', `${GET_FILTERED_PRODUCTS_API}?${query}`);
 
-        console.log("FETCH PRODUCTS API response...", response);
+        // console.log("FETCH PRODUCTS API response...", response);
 
         if(!response?.data?.success) {
             throw new Error("Can't fetch products right now try again later");
@@ -75,7 +75,7 @@ export async function getProductDetails(id, dispatch) {
             `${GET_PRODUCT_DETAILS_API}/${id}`
         );
 
-        console.log("GET PRODUCT DETAILS API response...", response);
+        // console.log("GET PRODUCT DETAILS API response...", response);
 
         if(!response?.data?.success) {
             throw new Error("Can't fetch product details right now try again later");
@@ -107,7 +107,7 @@ export async function addToCart(data) {
             data,
         );
 
-        console.log("ADD TO CART API response...", response);
+        // console.log("ADD TO CART API response...", response);
 
         if(!response?.data?.success) {
             throw new Error("Can't add item to cart right now try again later");
@@ -135,7 +135,7 @@ export async function fetchCartItems(dispatch) {
             FETCH_CART_ITEMS_API,
         );
 
-        console.log("FETCH CART ITEMS API response...", response);
+        // console.log("FETCH CART ITEMS API response...", response);
 
         if(!response?.data?.success) {
             throw new Error("Can't fetch cart items right now try again later");
@@ -161,7 +161,7 @@ export async function updateCartItem(data, dispatch) {
             data,
         );
 
-        console.log("UPDATE CART API response...", response);
+        // console.log("UPDATE CART API response...", response);
 
         if(!response?.data?.success) {
             throw new Error("Can't update cart item right now try again later");
@@ -183,7 +183,7 @@ export async function deleteFromCart(productId, dispatch) {
             `${DELETE_FROM_CART_API}/${productId}`,
         );
 
-        console.log("DELETE FROM CART API response...", response);
+        // console.log("DELETE FROM CART API response...", response);
 
         if(!response?.data?.success) {
             throw new Error("Can't delete item from cart right now try again later");
